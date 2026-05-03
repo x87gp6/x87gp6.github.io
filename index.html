@@ -6,9 +6,7 @@
   <title>我們要結婚了</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -18,26 +16,40 @@
       color: #333;
     }
 
-    body {
-      background-image:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
-        url("wedding-bg.jpg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 32px 16px;
+  justify-content: center;
+  align-items: center;
 
-    .page {
-      display: none;
-      min-height: 100vh;
-      padding: 32px 16px;
-      justify-content: center;
-      align-items: center;
-    }
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 
-    .page.active {
-      display: flex;
-    }
+.page.active {
+  display: flex;
+}
+
+/* 三頁不同背景 */
+#page1 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("LZ8_2715.JPEG");
+}
+
+#page2 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("JAY00218.JPEG");
+}
+
+#page3 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("LZ8_2226.JPEG");
+}
 
     .card {
       width: 100%;
@@ -119,9 +131,7 @@
       transform: translateY(-1px);
     }
 
-    button.secondary {
-      background: #777;
-    }
+    button.secondary { background: #777; }
 
     .summary {
       line-height: 2;
@@ -133,14 +143,15 @@
       min-width: 150px;
     }
 
-    @media (max-width: 600px) {
-      .card {
-        padding: 24px 20px;
-      }
+    #emailVerifyStatus {
+      text-align: center;
+      font-weight: 700;
+      margin-top: 12px;
+    }
 
-      h1 {
-        font-size: 1.8rem;
-      }
+    @media (max-width: 600px) {
+      .card { padding: 24px 20px; }
+      h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -157,7 +168,7 @@
       </p>
 
       <div class="buttons">
-        <button onclick="goToPage(2)">登記</button>
+        <button type="button" onclick="goToPage(2)">登記</button>
       </div>
     </div>
   </section>
@@ -216,21 +227,21 @@
         <label>出席的賓客有幾位需要素食：</label>
         <input type="number" id="vegetarian" min="0" value="0" required>
 
-<label>電子喜帖寄送 Email：</label>
-<input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
+        <label>電子喜帖寄送 Email：</label>
+        <input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
 
-<div class="buttons" style="margin-top: 12px;">
-  <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
-</div>
+        <div class="buttons" style="margin-top: 12px;">
+          <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
+        </div>
 
-<label>請輸入 Email 驗證碼：</label>
-<input type="text" id="emailCode" placeholder="請輸入 6 碼驗證碼">
+        <label>請輸入 Email 驗證碼：</label>
+        <input type="text" id="emailCode" placeholder="請輸入 6 碼驗證碼">
 
-<div class="buttons" style="margin-top: 12px;">
-  <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
-</div>
+        <div class="buttons" style="margin-top: 12px;">
+          <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
+        </div>
 
-<p id="emailVerifyStatus" style="text-align:center; font-weight:700;"></p>
+        <p id="emailVerifyStatus">Email 尚未驗證</p>
 
         <div class="buttons">
           <button type="button" onclick="submitData()">送出</button>
@@ -245,78 +256,258 @@
       <h1>您的登記資料如下</h1>
 
       <p>
-        以下為您填寫的出席登記資料，請確認內容是否正確。
-        確認後，系統將寄送確認 Email 至您填寫的信箱，信中會附上專屬連結，方便日後查看或修改資料。
+        以下為您填寫的出席登記資料。確認信已寄送至您填寫的 Email，
+        信中會附上專屬連結，方便日後查看或修改資料。
       </p>
 
       <div class="summary" id="summary"></div>
 
       <div class="buttons">
-        <button class="secondary" onclick="goToPage(2)">修改</button>
-        <button class="secondary" onclick="window.close()">關閉</button>
+        <button class="secondary" type="button" onclick="goToPage(2)">修改</button>
+        <button class="secondary" type="button" onclick="window.close()">關閉</button>
       </div>
     </div>
   </section>
 
   <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
+
     let formData = {};
+    let verifiedEmail = "";
+    let isEmailVerified = false;
 
     function goToPage(pageNumber) {
       document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
       });
+
       document.getElementById("page" + pageNumber).classList.add("active");
       window.scrollTo(0, 0);
     }
 
-    function confirmData() {
+    function resetEmailVerification() {
+      const currentEmail = document.getElementById("email").value.trim();
+
+      if (currentEmail !== verifiedEmail) {
+        isEmailVerified = false;
+
+        const status = document.getElementById("emailVerifyStatus");
+        status.innerText = "Email 尚未驗證";
+        status.style.color = "#b65b00";
+      }
+    }
+
+    function collectAndValidateForm() {
       const form = document.getElementById("rsvpForm");
 
       if (!form.checkValidity()) {
         form.reportValidity();
-        return;
+        return null;
       }
 
+      const name = document.getElementById("guestName").value.trim();
+      const relationship = document.getElementById("relationship").value;
+      const attendance = document.getElementById("attendance").value;
       const guestCount = Number(document.getElementById("guestCount").value);
       const childSeat = Number(document.getElementById("childSeat").value);
       const vegetarian = Number(document.getElementById("vegetarian").value);
+      const email = document.getElementById("email").value.trim();
+
+      if (!name) {
+        alert("請填寫您的大名");
+        return null;
+      }
+
+      if (!relationship) {
+        alert("請選擇與新人的關係");
+        return null;
+      }
+
+      if (!attendance) {
+        alert("請選擇是否出席婚宴");
+        return null;
+      }
+
+      if (guestCount < 0 || childSeat < 0 || vegetarian < 0) {
+        alert("人數不可小於 0");
+        return null;
+      }
 
       if (childSeat > guestCount) {
         alert("兒童座椅數量不可大於出席人數");
-        return;
+        return null;
       }
 
       if (vegetarian > guestCount) {
         alert("素食人數不可大於出席人數");
+        return null;
+      }
+
+      if (!email) {
+        alert("請填寫 Email");
+        return null;
+      }
+
+      if (!isEmailVerified || email !== verifiedEmail) {
+        alert("請先完成 Email 驗證");
+        return null;
+      }
+
+      return {
+        name,
+        relationship,
+        attendance,
+        guestCount,
+        childSeat,
+        vegetarian,
+        email
+      };
+    }
+
+    function sendEmailCode() {
+      const emailInput = document.getElementById("email");
+      const status = document.getElementById("emailVerifyStatus");
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
         return;
       }
 
-      formData = {
-        name: document.getElementById("guestName").value.trim(),
-        relationship: document.getElementById("relationship").value,
-        attendance: document.getElementById("attendance").value,
-        guestCount: guestCount,
-        childSeat: childSeat,
-        vegetarian: vegetarian,
-        email: document.getElementById("email").value.trim()
-      };
+      const email = emailInput.value.trim();
 
-      document.getElementById("summary").innerHTML = `
-        <div><strong>姓名：</strong>${formData.name}</div>
-        <div><strong>與新人關係：</strong>${formData.relationship}</div>
-        <div><strong>是否出席：</strong>${formData.attendance}</div>
-        <div><strong>出席人數：</strong>${formData.guestCount}</div>
-        <div><strong>兒童座椅：</strong>${formData.childSeat}</div>
-        <div><strong>素食人數：</strong>${formData.vegetarian}</div>
-        <div><strong>Email：</strong>${formData.email}</div>
-      `;
+      if (!email) {
+        alert("請先填寫 Email");
+        return;
+      }
 
-      goToPage(3);
+      status.innerText = "驗證碼寄送中...";
+      status.style.color = "#7b4f3a";
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "sendCode",
+          email: email
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          isEmailVerified = false;
+          verifiedEmail = "";
+          document.getElementById("emailCode").value = "";
+
+          status.innerText = "驗證碼已寄出，請至 Email 查看";
+          status.style.color = "#7b4f3a";
+
+          alert("驗證碼已寄出，請至 Email 查看。");
+        } else {
+          status.innerText = "驗證碼寄送失敗";
+          status.style.color = "red";
+          alert(data.message || "驗證碼寄送失敗");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        status.innerText = "驗證碼寄送失敗";
+        status.style.color = "red";
+        alert("驗證碼寄送失敗，請稍後再試");
+      });
+    }
+
+    function verifyEmailCode() {
+      const email = document.getElementById("email").value.trim();
+      const code = document.getElementById("emailCode").value.trim();
+      const status = document.getElementById("emailVerifyStatus");
+
+      if (!email) {
+        alert("請先填寫 Email");
+        return;
+      }
+
+      if (!code) {
+        alert("請輸入驗證碼");
+        return;
+      }
+
+      status.innerText = "驗證中...";
+      status.style.color = "#7b4f3a";
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "verifyCode",
+          email: email,
+          code: code
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          isEmailVerified = true;
+          verifiedEmail = email;
+
+          status.innerText = "Email 驗證成功";
+          status.style.color = "green";
+
+          alert("Email 驗證成功");
+        } else {
+          isEmailVerified = false;
+          verifiedEmail = "";
+
+          status.innerText = "驗證碼錯誤或已失效";
+          status.style.color = "red";
+
+          alert(data.message || "驗證碼錯誤或已失效");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        isEmailVerified = false;
+
+        status.innerText = "驗證失敗";
+        status.style.color = "red";
+
+        alert("驗證失敗，請稍後再試");
+      });
     }
 
     function submitData() {
-      alert("目前是前端展示版。下一步會接 Google Apps Script，送出後寫入 Google Sheet 並寄送確認 Email。");
-      console.log("準備送出的資料：", formData);
+      const data = collectAndValidateForm();
+      if (!data) return;
+
+      formData = data;
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "submit",
+          ...formData
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById("summary").innerHTML = `
+            <div><strong>姓名：</strong>${formData.name}</div>
+            <div><strong>與新人關係：</strong>${formData.relationship}</div>
+            <div><strong>是否出席：</strong>${formData.attendance}</div>
+            <div><strong>出席人數：</strong>${formData.guestCount}</div>
+            <div><strong>兒童座椅：</strong>${formData.childSeat}</div>
+            <div><strong>素食人數：</strong>${formData.vegetarian}</div>
+            <div><strong>Email：</strong>${formData.email}</div>
+          `;
+
+          goToPage(3);
+          alert("登記成功！確認信已寄出，請至 Email 查看。");
+        } else {
+          alert(data.message || "送出失敗，請稍後再試。");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("送出失敗，請確認網路或稍後再試。");
+      });
     }
   </script>
 
