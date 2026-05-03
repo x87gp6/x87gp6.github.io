@@ -510,13 +510,62 @@
       });
     }
 
-    window.addEventListener("load", function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
+    function getDataByToken(token) {
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("工作表1");
+      const data = sheet.getDataRange().getValues();
 
+      for (let i = 1; i < data.length; i++) {
+        if (data[i][1] === token) {
+          return output({
+            status: "success",
+            data: {
+              name: data[i][2],
+              relationship: data[i][3],
+              attendance: data[i][4],
+              guestCount: data[i][5],
+              childSeat: data[i][6],
+              vegetarian: data[i][7],
+              email: data[i][8]
+            }
+          });
+        }
+      }
+
+      return output({ status: "error" });
+    }
+
+    window.addEventListener("load", function () {
+      const token = new URLSearchParams(window.location.search).get("token");
+    
       if (token) {
-        console.log("偵測到 token:", token);
         goToPage(2);
+    
+        fetch(GAS_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            action: "getData",
+            token: token
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+    
+            const d = data.data;
+    
+            guestName.value = d.name;
+            relationship.value = d.relationship;
+            attendance.value = d.attendance;
+            guestCount.value = d.guestCount;
+            childSeat.value = d.childSeat;
+            vegetarian.value = d.vegetarian;
+            email.value = d.email;
+    
+            // 👉 這行很重要（免驗證）
+            isEmailVerified = true;
+            verifiedEmail = d.email;
+          }
+        });
       }
     });
   </script>
