@@ -509,6 +509,16 @@
         alert("送出失敗，請確認網路或稍後再試。");
       });
     }
+
+    window.addEventListener("load", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+
+      if (token) {
+        console.log("偵測到 token:", token);
+        goToPage(2);
+      }
+    });
   </script>
 
 </body>
