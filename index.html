@@ -1,53 +1,324 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>我們要結婚了</title>
+
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: "Microsoft JhengHei", sans-serif;
+    * {
+      box-sizing: border-box;
     }
 
-    .hero {
-      background: url('photo.jpg') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      min-height: 100%;
+      color: #333;
+    }
+
+    body {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+        url("wedding-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 32px 16px;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      color: white;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
     }
 
     h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
     }
 
-    .btn {
-      padding: 12px 24px;
-      background-color: rgba(255,255,255,0.9);
-      color: black;
-      text-decoration: none;
-      border-radius: 30px;
-      font-size: 18px;
-      transition: 0.3s;
+    p {
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
 
-    .btn:hover {
-      background-color: white;
+    .info {
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 8px;
+      border-radius: 12px;
+      border: 1px solid #bbb;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .map-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0 20px;
+    }
+
+    .map-links a {
+      color: #5a3e2b;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #7b4f3a;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: #777;
+    }
+
+    .summary {
+      line-height: 2;
+      font-size: 1.05rem;
+    }
+
+    .summary strong {
+      display: inline-block;
+      min-width: 150px;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 24px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="hero">
-  <h1>我們要結婚了 💍</h1>
-  <a class="btn" href="rsvp.html">填寫出席</a>
+  <!-- Page 1 -->
+  <section id="page1" class="page active">
+    <div class="card">
+      <h1>我們要結婚了</h1>
+      <p>
+        誠摯邀請您與我們一同見證人生中重要的時刻。
+        請點選下方按鈕完成出席登記，讓我們能為您安排座位與餐點。
+      </p>
+
+      <div class="buttons">
+        <button onclick="goToPage(2)">登記</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 2 -->
+  <section id="page2" class="page">
+    <div class="card">
+      <h1>請協助填寫出席資訊</h1>
+
+      <div class="info">
+        <div><strong>日期：</strong>2026年11月7日（六）</div>
+        <div><strong>時間：</strong>12:00 婚宴入席　12:30 婚宴開始</div>
+        <div><strong>宴客地點：</strong>251新北市淡水區中正路382號</div>
+
+        <div class="map-links">
+          <a href="https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+            Google 地圖
+          </a>
+          <a href="https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82" target="_blank">
+            Apple 地圖
+          </a>
+        </div>
+
+        <div><strong>交通：</strong>交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。</div>
+      </div>
+
+      <form id="rsvpForm">
+        <label>請問您的大名：</label>
+        <input type="text" id="guestName" required placeholder="請輸入姓名">
+
+        <label>與新人的關係：</label>
+        <select id="relationship" required>
+          <option value="">請選擇</option>
+          <option>🤵新郎親戚</option>
+          <option>🤵新郎同學</option>
+          <option>🤵新郎同事</option>
+          <option>👰新娘親戚</option>
+          <option>👰新娘同學</option>
+          <option>👰新娘同事</option>
+          <option>其他關係</option>
+        </select>
+
+        <label>是否會出席婚宴：</label>
+        <select id="attendance" required>
+          <option value="">請選擇</option>
+          <option>⭕️ 出席，絕對到場！</option>
+          <option>❌ 無法出席，祝你們幸福美滿！</option>
+        </select>
+
+        <label>共幾個人出席：</label>
+        <input type="number" id="guestCount" min="0" value="1" required>
+
+        <label>需要幾張兒童座椅：</label>
+        <input type="number" id="childSeat" min="0" value="0" required>
+
+        <label>出席的賓客有幾位需要素食：</label>
+        <input type="number" id="vegetarian" min="0" value="0" required>
+
+<label>電子喜帖寄送 Email：</label>
+<input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
+
+<div class="buttons" style="margin-top: 12px;">
+  <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
 </div>
+
+<label>請輸入 Email 驗證碼：</label>
+<input type="text" id="emailCode" placeholder="請輸入 6 碼驗證碼">
+
+<div class="buttons" style="margin-top: 12px;">
+  <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
+</div>
+
+<p id="emailVerifyStatus" style="text-align:center; font-weight:700;"></p>
+
+        <div class="buttons">
+          <button type="button" onclick="submitData()">送出</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Page 3 -->
+  <section id="page3" class="page">
+    <div class="card">
+      <h1>您的登記資料如下</h1>
+
+      <p>
+        以下為您填寫的出席登記資料，請確認內容是否正確。
+        確認後，系統將寄送確認 Email 至您填寫的信箱，信中會附上專屬連結，方便日後查看或修改資料。
+      </p>
+
+      <div class="summary" id="summary"></div>
+
+      <div class="buttons">
+        <button class="secondary" onclick="goToPage(2)">修改</button>
+        <button class="secondary" onclick="window.close()">關閉</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let formData = {};
+
+    function goToPage(pageNumber) {
+      document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+      });
+      document.getElementById("page" + pageNumber).classList.add("active");
+      window.scrollTo(0, 0);
+    }
+
+    function confirmData() {
+      const form = document.getElementById("rsvpForm");
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const guestCount = Number(document.getElementById("guestCount").value);
+      const childSeat = Number(document.getElementById("childSeat").value);
+      const vegetarian = Number(document.getElementById("vegetarian").value);
+
+      if (childSeat > guestCount) {
+        alert("兒童座椅數量不可大於出席人數");
+        return;
+      }
+
+      if (vegetarian > guestCount) {
+        alert("素食人數不可大於出席人數");
+        return;
+      }
+
+      formData = {
+        name: document.getElementById("guestName").value.trim(),
+        relationship: document.getElementById("relationship").value,
+        attendance: document.getElementById("attendance").value,
+        guestCount: guestCount,
+        childSeat: childSeat,
+        vegetarian: vegetarian,
+        email: document.getElementById("email").value.trim()
+      };
+
+      document.getElementById("summary").innerHTML = `
+        <div><strong>姓名：</strong>${formData.name}</div>
+        <div><strong>與新人關係：</strong>${formData.relationship}</div>
+        <div><strong>是否出席：</strong>${formData.attendance}</div>
+        <div><strong>出席人數：</strong>${formData.guestCount}</div>
+        <div><strong>兒童座椅：</strong>${formData.childSeat}</div>
+        <div><strong>素食人數：</strong>${formData.vegetarian}</div>
+        <div><strong>Email：</strong>${formData.email}</div>
+      `;
+
+      goToPage(3);
+    }
+
+    function submitData() {
+      alert("目前是前端展示版。下一步會接 Google Apps Script，送出後寫入 Google Sheet 並寄送確認 Email。");
+      console.log("準備送出的資料：", formData);
+    }
+  </script>
 
 </body>
 </html>
