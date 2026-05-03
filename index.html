@@ -1,200 +1,646 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我們要結婚了</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我們要結婚了</title>
 
-<style>
-body { margin:0; font-family:Arial; }
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      min-height: 100%;
+      color: #333;
+    }
 
 .page {
-  display:none;
-  min-height:100vh;
-  justify-content:center;
-  align-items:center;
-  background-size:cover;
-  background-position:center;
-  color:white;
+  display: none;
+  min-height: 100vh;
+  padding: 32px 16px;
+  justify-content: center;
+  align-items: center;
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
-.active { display:flex; }
-
-.card {
-  background:rgba(0,0,0,0.5);
-  padding:30px;
-  border-radius:15px;
-  width:90%;
-  max-width:500px;
+.page.active {
+  display: flex;
 }
 
-input, select {
-  width:100%;
-  padding:10px;
-  margin-top:10px;
+/* 三頁不同背景 */
+#page1 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("./LZ8_2715.JPEG");
 }
 
-button {
-  margin-top:15px;
-  padding:10px;
-  width:100%;
+#page2 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("./JAY00218.JPEG");
 }
-</style>
+
+#page3 {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+    url("./LZ8_2226.JPEG");
+}
+
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+    }
+
+    p {
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .info {
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 8px;
+      border-radius: 12px;
+      border: 1px solid #bbb;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .map-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0 20px;
+    }
+
+    .map-links a {
+      color: #5a3e2b;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #7b4f3a;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    button.secondary { background: #777; }
+
+    .summary {
+      line-height: 2;
+      font-size: 1.05rem;
+    }
+
+    .summary strong {
+      display: inline-block;
+      min-width: 150px;
+    }
+
+    #emailVerifyStatus {
+      text-align: center;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 24px 20px; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- Page1 -->
-<div id="page1" class="page active" style="background-image:url('LZ8_2715.JPEG')">
-  <div class="card">
-    <h1>我們要結婚了</h1>
-    <p>誠摯邀請您見證我們的重要時刻</p>
-    <button onclick="goToPage(2)">登記</button>
-  </div>
-</div>
+  <!-- Page 1 -->
+  <section id="page1" class="page active">
+    <div class="card">
+      <h1>我們要結婚了</h1>
+      <p>
+        誠摯邀請您與我們一同見證人生中重要的時刻。
+        請點選下方按鈕完成出席登記，讓我們能為您安排座位與餐點。
+      </p>
 
-<!-- Page2 -->
-<div id="page2" class="page" style="background-image:url('JAY00218.JPEG')">
-  <div class="card">
-    <h2>填寫出席資訊</h2>
+      <div class="buttons">
+        <button type="button" onclick="goToPage(2)">登記</button>
+      </div>
+    </div>
+  </section>
 
-    <input id="guestName" placeholder="姓名">
+  <!-- Page 2 -->
+  <section id="page2" class="page">
+    <div class="card">
+      <h1>請協助填寫出席資訊</h1>
 
-    <select id="relationship">
-      <option value="">選擇關係</option>
-      <option>新郎朋友</option>
-      <option>新娘朋友</option>
-    </select>
+      <div class="info">
+        <div><strong>日期：</strong>2026年11月7日（六）</div>
+        <div><strong>時間：</strong>12:00 婚宴入席　12:30 婚宴開始</div>
+        <div><strong>宴客地點：</strong>251新北市淡水區中正路382號</div>
 
-    <select id="attendance">
-      <option value="">是否出席</option>
-      <option>出席</option>
-      <option>不出席</option>
-    </select>
+        <div class="map-links">
+          <a href="https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+            Google 地圖
+          </a>
+          <a href="https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82" target="_blank">
+            Apple 地圖
+          </a>
+        </div>
 
-    <input id="guestCount" type="number" value="1">
-    <input id="childSeat" type="number" value="0">
-    <input id="vegetarian" type="number" value="0">
+        <div><strong>交通：</strong>交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。</div>
+      </div>
 
-    <input id="email" placeholder="Email" oninput="resetEmailVerification()">
+      <form id="rsvpForm">
+        <label>請問您的大名：</label>
+        <input type="text" id="guestName" required placeholder="請輸入姓名">
 
-    <button onclick="sendEmailCode()">寄送驗證碼</button>
+        <label>與新人的關係：</label>
+        <select id="relationship" required>
+          <option value="">請選擇</option>
+          <option>🤵新郎親戚</option>
+          <option>🤵新郎同學</option>
+          <option>🤵新郎同事</option>
+          <option>👰新娘親戚</option>
+          <option>👰新娘同學</option>
+          <option>👰新娘同事</option>
+          <option>其他關係</option>
+        </select>
 
-    <input id="emailCode" placeholder="輸入驗證碼">
-    <button onclick="verifyEmailCode()">驗證</button>
+        <label>是否會出席婚宴：</label>
+        <select id="attendance" required>
+          <option value="">請選擇</option>
+          <option>⭕️ 出席，絕對到場！</option>
+          <option>❌ 無法出席，祝你們幸福美滿！</option>
+        </select>
 
-    <p id="emailVerifyStatus">尚未驗證</p>
+        <label>共幾個人出席：</label>
+        <input type="number" id="guestCount" min="0" value="1" required>
 
-    <button onclick="submitData()">送出</button>
-  </div>
-</div>
+        <label>需要幾張兒童座椅：</label>
+        <input type="number" id="childSeat" min="0" value="0" required>
 
-<!-- Page3 -->
-<div id="page3" class="page" style="background-image:url('LZ8_2226.JPEG')">
-  <div class="card">
-    <h2>資料確認</h2>
-    <div id="summary"></div>
-    <button onclick="goToPage(2)">修改</button>
-  </div>
-</div>
+        <label>出席的賓客有幾位需要素食：</label>
+        <input type="number" id="vegetarian" min="0" value="0" required>
 
-<script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
+        <label>電子喜帖寄送 Email：</label>
+        <input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
 
-let verifiedEmail = "";
-let isEmailVerified = false;
+        <div class="buttons" style="margin-top: 12px;">
+          <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
+        </div>
 
-/* ===== 頁面切換 ===== */
-function goToPage(p){
-  document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
-  document.getElementById("page"+p).classList.add("active");
-}
+        <label>請輸入 Email 驗證碼：</label>
+        <input type="text" id="emailCode" placeholder="請輸入 6 碼驗證碼">
 
-/* ===== token 自動跳頁（放這裡才對） ===== */
-window.addEventListener("load", function () {
-  const token = new URLSearchParams(window.location.search).get("token");
+        <div class="buttons" style="margin-top: 12px;">
+          <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
+        </div>
+
+        <p id="emailVerifyStatus">Email 尚未驗證</p>
+
+        <div class="buttons">
+          <button type="button" onclick="submitData()">送出</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Page 3 -->
+  <section id="page3" class="page">
+    <div class="card">
+      <h1>您的登記資料如下</h1>
+
+      <p>
+        以下為您填寫的出席登記資料。確認信已寄送至您填寫的 Email，
+        信中會附上專屬連結，方便日後查看或修改資料。
+      </p>
+
+      <div class="summary" id="summary"></div>
+
+      <div class="buttons">
+        <button class="secondary" type="button" onclick="goToPage(2)">修改</button>
+        <button class="secondary" type="button" onclick="window.close()">關閉</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
+
+    let formData = {};
+    let verifiedEmail = "";
+    let isEmailVerified = false;
+
+    function goToPage(pageNumber) {
+      document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+      });
+
+      document.getElementById("page" + pageNumber).classList.add("active");
+      window.scrollTo(0, 0);
+    }
+
+    function resetEmailVerification() {
+      const currentEmail = document.getElementById("email").value.trim();
+
+      if (currentEmail !== verifiedEmail) {
+        isEmailVerified = false;
+
+        const status = document.getElementById("emailVerifyStatus");
+        status.innerText = "Email 尚未驗證";
+        status.style.color = "#b65b00";
+      }
+    }
+
+    function collectAndValidateForm() {
+      const form = document.getElementById("rsvpForm");
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return null;
+      }
+
+      const name = document.getElementById("guestName").value.trim();
+      const relationship = document.getElementById("relationship").value;
+      const attendance = document.getElementById("attendance").value;
+      const guestCount = Number(document.getElementById("guestCount").value);
+      const childSeat = Number(document.getElementById("childSeat").value);
+      const vegetarian = Number(document.getElementById("vegetarian").value);
+      const email = document.getElementById("email").value.trim();
+
+      if (!name) {
+        alert("請填寫您的大名");
+        return null;
+      }
+
+      if (!relationship) {
+        alert("請選擇與新人的關係");
+        return null;
+      }
+
+      if (!attendance) {
+        alert("請選擇是否出席婚宴");
+        return null;
+      }
+
+      if (guestCount < 0 || childSeat < 0 || vegetarian < 0) {
+        alert("人數不可小於 0");
+        return null;
+      }
+
+      if (childSeat > guestCount) {
+        alert("兒童座椅數量不可大於出席人數");
+        return null;
+      }
+
+      if (vegetarian > guestCount) {
+        alert("素食人數不可大於出席人數");
+        return null;
+      }
+
+      if (!email) {
+        alert("請填寫 Email");
+        return null;
+      }
+
+      if (!isEmailVerified || email !== verifiedEmail) {
+        alert("請先完成 Email 驗證");
+        return null;
+      }
+
+      return {
+        name,
+        relationship,
+        attendance,
+        guestCount,
+        childSeat,
+        vegetarian,
+        email
+      };
+    }
+
+    function sendEmailCode() {
+      const emailInput = document.getElementById("email");
+      const status = document.getElementById("emailVerifyStatus");
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
+        return;
+      }
+
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        alert("請先填寫 Email");
+        return;
+      }
+
+      status.innerText = "驗證碼寄送中...";
+      status.style.color = "#7b4f3a";
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "sendCode",
+          email: email
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          isEmailVerified = false;
+          verifiedEmail = "";
+          document.getElementById("emailCode").value = "";
+
+          status.innerText = "驗證碼已寄出，請至 Email 查看";
+          status.style.color = "#7b4f3a";
+
+          alert("驗證碼已寄出，請至 Email 查看。");
+        } else {
+          status.innerText = "驗證碼寄送失敗";
+          status.style.color = "red";
+          alert(data.message || "驗證碼寄送失敗");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        status.innerText = "驗證碼寄送失敗";
+        status.style.color = "red";
+        alert("驗證碼寄送失敗，請稍後再試");
+      });
+    }
+
+    function verifyEmailCode() {
+      const email = document.getElementById("email").value.trim();
+      const code = document.getElementById("emailCode").value.trim();
+      const status = document.getElementById("emailVerifyStatus");
+
+      if (!email) {
+        alert("請先填寫 Email");
+        return;
+      }
+
+      if (!code) {
+        alert("請輸入驗證碼");
+        return;
+      }
+
+      status.innerText = "驗證中...";
+      status.style.color = "#7b4f3a";
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "verifyCode",
+          email: email,
+          code: code
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          isEmailVerified = true;
+          verifiedEmail = email;
+
+          status.innerText = "Email 驗證成功";
+          status.style.color = "green";
+
+          alert("Email 驗證成功");
+        } else {
+          isEmailVerified = false;
+          verifiedEmail = "";
+
+          status.innerText = "驗證碼錯誤或已失效";
+          status.style.color = "red";
+
+          alert(data.message || "驗證碼錯誤或已失效");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        isEmailVerified = false;
+
+        status.innerText = "驗證失敗";
+        status.style.color = "red";
+
+        alert("驗證失敗，請稍後再試");
+      });
+    }
+
+    function submitData() {
+      const data = collectAndValidateForm();
+      if (!data) return;
+
+      formData = data;
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "submit",
+          ...formData
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById("summary").innerHTML = `
+            <div><strong>姓名：</strong>${formData.name}</div>
+            <div><strong>與新人關係：</strong>${formData.relationship}</div>
+            <div><strong>是否出席：</strong>${formData.attendance}</div>
+            <div><strong>出席人數：</strong>${formData.guestCount}</div>
+            <div><strong>兒童座椅：</strong>${formData.childSeat}</div>
+            <div><strong>素食人數：</strong>${formData.vegetarian}</div>
+            <div><strong>Email：</strong>${formData.email}</div>
+          `;
+
+          goToPage(3);
+          alert("登記成功！確認信已寄出，請至 Email 查看。");
+        } else {
+          alert(data.message || "送出失敗，請稍後再試。");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("送出失敗，請確認網路或稍後再試。");
+      });
+    }
+    
+    
+    
+    const SHEET_NAME = "工作表1";
+const CODE_EXPIRE_MIN = 10;
+
+window.onload = function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("token");
+
   if (token) {
-    console.log("token:", token);
+    console.log("偵測到 token:", token);
+
+    // 👉 直接跳到 Page2（修改頁）
     goToPage(2);
+
+    // 👉 未來可以在這裡加：從後端抓資料回填
   }
-});
+};
 
-/* ===== Email 重置 ===== */
-function resetEmailVerification(){
-  isEmailVerified=false;
-  document.getElementById("emailVerifyStatus").innerText="尚未驗證";
-}
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+  const action = data.action;
 
-/* ===== 寄驗證碼 ===== */
-function sendEmailCode(){
-  const email=document.getElementById("email").value;
-
-  fetch(GAS_URL,{
-    method:"POST",
-    body:JSON.stringify({action:"sendCode",email})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.status==="success"){
-      alert("已寄出");
-    }else{
-      alert("失敗");
-    }
-  })
-}
-
-/* ===== 驗證碼 ===== */
-function verifyEmailCode(){
-  const email=document.getElementById("email").value;
-  const code=document.getElementById("emailCode").value;
-
-  fetch(GAS_URL,{
-    method:"POST",
-    body:JSON.stringify({action:"verifyCode",email,code})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.status==="success"){
-      isEmailVerified=true;
-      verifiedEmail=email;
-      document.getElementById("emailVerifyStatus").innerText="驗證成功";
-    }else{
-      alert("錯誤");
-    }
-  })
-}
-
-/* ===== 送出 ===== */
-function submitData(){
-
-  if(!isEmailVerified){
-    alert("請先驗證Email");
-    return;
+  if (action === "sendCode") {
+    return sendCode(data.email);
   }
 
-  const data={
-    name:guestName.value,
-    relationship:relationship.value,
-    attendance:attendance.value,
-    guestCount:guestCount.value,
-    childSeat:childSeat.value,
-    vegetarian:vegetarian.value,
-    email:email.value
-  };
+  if (action === "verifyCode") {
+    return verifyCode(data.email, data.code);
+  }
 
-  fetch(GAS_URL,{
-    method:"POST",
-    body:JSON.stringify({action:"submit",...data})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.status==="success"){
-      summary.innerHTML=JSON.stringify(data,null,2);
-      goToPage(3);
-    }
-  })
+  if (action === "submit") {
+    return submitData(data);
+  }
+
+  return output({ status: "error", message: "invalid action" });
 }
-</script>
+
+function sendCode(email) {
+  if (!email) {
+    return output({ status: "error", message: "缺少 Email" });
+  }
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+  CacheService.getScriptCache().put(
+    "emailCode_" + email,
+    code,
+    CODE_EXPIRE_MIN * 60
+  );
+
+  MailApp.sendEmail({
+    to: email,
+    subject: "婚禮登記 Email 驗證碼",
+    htmlBody: `
+      <p>您好：</p>
+      <p>您的婚禮登記 Email 驗證碼是：</p>
+      <h2>${code}</h2>
+      <p>此驗證碼 ${CODE_EXPIRE_MIN} 分鐘內有效。</p>
+      <p>若非您本人操作，請忽略此信。</p>
+    `
+  });
+
+  return output({ status: "success", message: "驗證碼已寄出" });
+}
+
+function verifyCode(email, code) {
+  const savedCode = CacheService.getScriptCache().get("emailCode_" + email);
+
+  if (!savedCode) {
+    return output({ status: "error", message: "驗證碼已過期，請重新寄送" });
+  }
+
+  if (savedCode !== code) {
+    return output({ status: "error", message: "驗證碼錯誤" });
+  }
+
+  return output({ status: "success", message: "Email 驗證成功" });
+}
+
+function submitData(data) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+
+  const token = Utilities.getUuid();
+  const timestamp = new Date();
+
+  sheet.appendRow([
+    timestamp,
+    token,
+    data.name,
+    data.relationship,
+    data.attendance,
+    data.guestCount,
+    data.childSeat,
+    data.vegetarian,
+    data.email
+  ]);
+
+  const guestUrl = `https://x87gp6.github.io/?token=${token}`;
+
+  MailApp.sendEmail({
+    to: data.email,
+    subject: "婚禮出席登記確認",
+    htmlBody: `
+      <p>您好，${data.name}：</p>
+      <p>我們已收到您的婚宴出席登記，感謝您的回覆。</p>
+      <p><b>您的登記資訊如下：</b></p>
+      <ul>
+        <li>與新人關係：${data.relationship}</li>
+        <li>是否出席：${data.attendance}</li>
+        <li>出席人數：${data.guestCount}</li>
+        <li>兒童座椅：${data.childSeat}</li>
+        <li>素食人數：${data.vegetarian}</li>
+      </ul>
+      <p>您可透過以下專屬連結查看或修改資料：</p>
+      <p><a href="${guestUrl}">${guestUrl}</a></p>
+      <p>期待與您相見。</p>
+    `
+  });
+
+  return output({ status: "success", token });
+}
+
+function output(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+
+  </script>
 
 </body>
 </html>
