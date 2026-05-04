@@ -55,14 +55,37 @@
     }
 
     .card {
-      width: min(100%, 680px);
-      background: rgba(255,255,255,0.9);
+      width: min(100%, 680px, calc((100svh - 44px) * 9 / 19.5));
+      height: min(calc(100svh - 44px), calc((100vw - 28px) * 19.5 / 9));
+      aspect-ratio: 9 / 19.5;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(255,255,255,0.9);
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border-radius: 24px;
-      padding: 32px;
+      border-radius: 44px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.25);
     }
+
+    #page1 .card { background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.9)), url("./p1b.jpg"); }
+    #page2 .card { background-image: linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.92)), url("./p2b.jpg"); }
+    #page3 .card { background-image: linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.92)), url("./p3b.jpg"); }
+
+    .card-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 32px;
+    }
+
+    .card-scroll::-webkit-scrollbar { width: 0; height: 0; }
 
     h1 {
       text-align: center;
@@ -395,9 +418,12 @@
 
       .card {
         margin: 0 auto;
-        padding: 24px 18px;
-        border-radius: 20px;
+        width: min(100%, calc((100svh - 44px) * 9 / 19.5));
+        height: min(calc(100svh - 44px), calc((100vw - 24px) * 19.5 / 9));
+        border-radius: 44px;
       }
+
+      .card-scroll { padding: 24px 18px; }
 
       p, .info, .summary { font-size: 0.98rem; }
 
@@ -419,7 +445,7 @@
     }
 
     @media (max-width: 390px) {
-      .card { padding: 22px 16px; }
+      .card-scroll { padding: 22px 16px; }
       h1 { letter-spacing: 0.05em; }
     }
   </style>
@@ -429,6 +455,7 @@
 
   <section id="page1" class="page">
     <div class="card">
+      <div class="card-scroll">
       <h1>我們要結婚了</h1>
       <p>
         誠摯邀請您與我們一同見證人生中重要的時刻。
@@ -438,11 +465,13 @@
       <div class="buttons">
         <button type="button" onclick="goToPage(2)">登記</button>
       </div>
+      </div>
     </div>
   </section>
 
   <section id="page2" class="page">
     <div class="card">
+      <div class="card-scroll">
       <h1>請協助填寫出席資訊</h1>
 
       <div class="info">
@@ -510,11 +539,13 @@
           <button type="button" onclick="submitData()">送出</button>
         </div>
       </form>
+      </div>
     </div>
   </section>
 
   <section id="page3" class="page">
     <div class="card">
+      <div class="card-scroll">
       <div id="countdownWrap" class="countdown-wrap">
         <div class="countdown-title">距離婚宴所剩時間</div>
         <div class="countdown-grid">
@@ -535,6 +566,7 @@
 
       <div class="buttons" id="editButtonWrap">
         <button class="secondary" type="button" onclick="editData()">修改</button>
+      </div>
       </div>
     </div>
   </section>
@@ -696,8 +728,11 @@
         page.classList.remove("active");
       });
 
-      document.getElementById("page" + pageNumber).classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const targetPage = document.getElementById("page" + pageNumber);
+      targetPage.classList.add("active");
+
+      const scrollBox = targetPage.querySelector(".card-scroll");
+      if (scrollBox) scrollBox.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function editData() {
