@@ -331,9 +331,9 @@
       <h1>請協助填寫出席資訊</h1>
 
       <div class="info">
-        <div><strong>日期：</strong>2026年11月7日（六）</div>
-        <div><strong>時間：</strong>12:00 婚宴入席　12:30 婚宴開始</div>
-        <div><strong>宴客地點：</strong>251新北市淡水區中正路382號</div>
+        <div><strong>日期：</strong><span id="page2Date"></span></div>
+        <div><strong>時間：</strong><span id="page2Time"></span></div>
+        <div><strong>宴客地點：</strong><span id="page2Location"></span></div>
 
         <div class="map-links">
           <a href="https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
@@ -344,7 +344,7 @@
           </a>
         </div>
 
-        <div><strong>交通：</strong>交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。</div>
+        <div><strong>交通：</strong><span id="page2Traffic"></span></div>
       </div>
 
       <form id="rsvpForm">
@@ -441,8 +441,12 @@
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
-    const WEDDING_DATE = "2026年11月7日（六）";
-    const WEDDING_TIME = "12:00 婚宴入席　12:30 婚宴開始";
+    const CONFIG = {
+      wedding: "2026-11-07T12:00:00",
+      editDeadline: "2026-11-05T12:00:00",
+      thanksDate: "2026-11-10T12:00:00"
+    };
+
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
     const WEDDING_TRAFFIC = "交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。";
     const GOOGLE_MAP_URL = "https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
@@ -450,9 +454,11 @@
     const SEAT_MAP_IMAGE_URL = "https://x87gp6.github.io/seat-map.jpg";
     const PHOTO_ALBUM_URL = "https://x87gp6.github.io/photos";
 
-    const EDIT_LOCK_TIME = new Date("2026-11-05T12:00:00+08:00");
-    const WEDDING_START_TIME = new Date("2026-11-07T12:00:00+08:00");
-    const THANK_YOU_TIME = new Date("2026-11-10T12:00:00+08:00");
+    const EDIT_LOCK_TIME = parseTaipeiTime(CONFIG.editDeadline);
+    const WEDDING_START_TIME = parseTaipeiTime(CONFIG.wedding);
+    const THANK_YOU_TIME = parseTaipeiTime(CONFIG.thanksDate);
+    const WEDDING_DATE = formatChineseDate(WEDDING_START_TIME);
+    const WEDDING_TIME = formatWeddingTime(WEDDING_START_TIME);
     let countdownTimer = null;
 
     let formData = {};
@@ -468,6 +474,33 @@
     function closeMessage() {
       document.getElementById("customAlert").classList.remove("active");
     }
+    function parseTaipeiTime(value) {
+      return new Date(value + "+08:00");
+    }
+
+    function pad2(num) {
+      return String(num).padStart(2, "0");
+    }
+
+    function formatChineseDate(date) {
+      const weekNames = ["日", "一", "二", "三", "四", "五", "六"];
+      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${weekNames[date.getDay()]}）`;
+    }
+
+    function formatWeddingTime(date) {
+      const startHour = pad2(date.getHours());
+      const startMinute = pad2(date.getMinutes());
+      const mealStart = new Date(date.getTime() + 30 * 60 * 1000);
+      return `${startHour}:${startMinute} 婚宴入席　${pad2(mealStart.getHours())}:${pad2(mealStart.getMinutes())} 婚宴開始`;
+    }
+
+    function updateStaticWeddingInfo() {
+      document.getElementById("page2Date").innerText = WEDDING_DATE;
+      document.getElementById("page2Time").innerText = WEDDING_TIME;
+      document.getElementById("page2Location").innerText = WEDDING_LOCATION;
+      document.getElementById("page2Traffic").innerText = WEDDING_TRAFFIC;
+    }
+
 
     function getTokenFromUrl() {
       const searchToken = new URLSearchParams(window.location.search).get("token");
@@ -913,6 +946,7 @@
 
     window.addEventListener("load", function () {
       initNumberSelects();
+      updateStaticWeddingInfo();
 
       currentToken = getTokenFromUrl();
 
