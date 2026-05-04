@@ -349,9 +349,12 @@
     }
 
     .seat-map-link {
-      margin-left: 8px;
-      white-space: nowrap;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+      min-height: 44px;   /* 跟 Google 地圖一致 */
+      padding: 0 18px;    /* 只保留左右間距 */
     }
 
     @media (max-width: 600px) {
