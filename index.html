@@ -532,9 +532,9 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T14:10:00",
-      editDeadline: "2026-05-04T14:05:00",
-      thanksDate: "2026-05-04T14:13:00"
+      wedding: "2026-05-04T14:58:00",
+      editDeadline: "2026-05-04T14:55:00",
+      thanksDate: "2026-05-04T15:00:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
@@ -762,10 +762,12 @@
       const showLockedInfo = isAfterEditLock();
       const tableNoHtml = showLockedInfo
         ? `
-          <div style="display:flex; align-items:center; flex-wrap:nowrap;">
-            <strong>桌號：</strong>
-            <span>${data.tableNo || "尚未公告"}</span>
-            <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
+          <div>
+            <div><strong>桌號：</strong></div>
+            <div style="display:flex; align-items:center; flex-wrap:nowrap;">
+              <span>${data.tableNo || "尚未公告"}</span>
+              <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
+            </div>
           </div>
         `
         : "";
