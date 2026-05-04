@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>我們要結婚了</title>
+  <title>??????</title>
 
   <style>
     * {
@@ -175,6 +175,56 @@
       border-bottom: 1px solid rgba(0,0,0,0.12);
     }
 
+    .countdown-wrap {
+      display: none;
+      text-align: center;
+      margin: 0 0 22px;
+      padding: 16px 12px;
+      border-radius: 18px;
+      background: rgba(123,79,58,0.10);
+    }
+
+    .countdown-title {
+      font-weight: 800;
+      color: #5a3e2b;
+      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .countdown-number {
+      font-size: clamp(1.55rem, 8vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #5a3e2b;
+    }
+
+    .countdown-label {
+      font-size: 0.9rem;
+      margin-top: 6px;
+      color: #6b5142;
+    }
+
+    .photo-link, .seat-map-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(123,79,58,0.12);
+      color: #5a3e2b;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
     #emailVerifyStatus {
       text-align: center;
       font-weight: 700;
@@ -264,91 +314,91 @@
 
   <section id="page1" class="page">
     <div class="card">
-      <h1>我們要結婚了</h1>
+      <h1>??????</h1>
       <p>
-        誠摯邀請您與我們一同見證人生中重要的時刻。
-        請點選下方按鈕完成出席登記，讓我們能為您安排座位與餐點。
+        ?????????????????????
+        ????????????????????????????
       </p>
 
       <div class="buttons">
-        <button type="button" onclick="goToPage(2)">登記</button>
+        <button type="button" onclick="goToPage(2)">??</button>
       </div>
     </div>
   </section>
 
   <section id="page2" class="page">
     <div class="card">
-      <h1>請協助填寫出席資訊</h1>
+      <h1>?????????</h1>
 
       <div class="info">
-        <div><strong>日期：</strong>2026年11月7日（六）</div>
-        <div><strong>時間：</strong>12:00 婚宴入席　12:30 婚宴開始</div>
-        <div><strong>宴客地點：</strong>251新北市淡水區中正路382號</div>
+        <div><strong>???</strong>2026?11?7????</div>
+        <div><strong>???</strong>12:00 ?????12:30 ????</div>
+        <div><strong>?????</strong>251?????????382?</div>
 
         <div class="map-links">
           <a href="https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-            Google 地圖
+            Google ??
           </a>
           <a href="https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82" target="_blank">
-            Apple 地圖
+            Apple ??
           </a>
         </div>
 
-        <div><strong>交通：</strong>交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。</div>
+        <div><strong>???</strong>??????????????????????????????</div>
       </div>
 
       <form id="rsvpForm">
-        <label>請問您的大名：</label>
-        <input type="text" id="guestName" required placeholder="請輸入姓名">
+        <label>???????</label>
+        <input type="text" id="guestName" required placeholder="?????">
 
-        <label>與新人的關係：</label>
+        <label>???????</label>
         <select id="relationship" required>
-          <option value="">請選擇</option>
-          <option>🤵新郎親戚</option>
-          <option>🤵新郎同學</option>
-          <option>🤵新郎同事</option>
-          <option>👰新娘親戚</option>
-          <option>👰新娘同學</option>
-          <option>👰新娘同事</option>
-          <option>其他關係</option>
+          <option value="">???</option>
+          <option>?????</option>
+          <option>?????</option>
+          <option>?????</option>
+          <option>?????</option>
+          <option>?????</option>
+          <option>?????</option>
+          <option>????</option>
         </select>
 
-        <label>是否出席婚宴：</label>
+        <label>???????</label>
         <select id="attendance" required onchange="toggleAttendanceDetails()">
-          <option value="">請選擇</option>
-          <option>⭕️ 出席</option>
-          <option>❌ 無法出席</option>
+          <option value="">???</option>
+          <option>?? ??</option>
+          <option>? ????</option>
         </select>
 
         <div id="attendanceDetails" style="display:none;">
-          <label>共幾個人出席：</label>
+          <label>???????</label>
           <select id="guestCount"></select>
 
-          <label>需要幾張兒童座椅：</label>
+          <label>?????????</label>
           <select id="childSeat"></select>
 
-          <label>出席的賓客有幾位需要素食：</label>
+          <label>?????????????</label>
           <select id="vegetarian"></select>
         </div>
 
-        <label>電子喜帖寄送 Email：</label>
+        <label>?????? Email?</label>
         <input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
 
         <div class="buttons" style="margin-top: 12px;">
-          <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
+          <button type="button" onclick="sendEmailCode()">?????</button>
         </div>
 
-        <label>請輸入 Email 驗證碼：</label>
-        <input type="text" id="emailCode" inputmode="numeric" pattern="[0-9]*" placeholder="請輸入 6 碼驗證碼">
+        <label>??? Email ????</label>
+        <input type="text" id="emailCode" inputmode="numeric" pattern="[0-9]*" placeholder="??? 6 ????">
 
         <div class="buttons" style="margin-top: 12px;">
-          <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
+          <button type="button" onclick="verifyEmailCode()">?? Email</button>
         </div>
 
-        <p id="emailVerifyStatus">Email 尚未驗證</p>
+        <p id="emailVerifyStatus">Email ????</p>
 
         <div class="buttons">
-          <button type="button" onclick="submitData()">送出</button>
+          <button type="button" onclick="submitData()">??</button>
         </div>
       </form>
     </div>
@@ -356,35 +406,54 @@
 
   <section id="page3" class="page">
     <div class="card">
-      <h1>您的登記資料如下</h1>
+      <div id="countdownWrap" class="countdown-wrap">
+        <div class="countdown-title">????????</div>
+        <div class="countdown-grid">
+          <div><div id="cdDays" class="countdown-number">0</div><div class="countdown-label">?</div></div>
+          <div><div id="cdHours" class="countdown-number">0</div><div class="countdown-label">?</div></div>
+          <div><div id="cdMinutes" class="countdown-number">0</div><div class="countdown-label">?</div></div>
+          <div><div id="cdSeconds" class="countdown-number">0</div><div class="countdown-label">?</div></div>
+        </div>
+      </div>
 
-      <p>
-        以下為您的出席登記資料。若需要調整內容，請點選下方「修改」。
+      <h1 id="page3Title">????????</h1>
+
+      <p id="page3Intro">
+        ??????????????????????????????
       </p>
 
       <div class="summary" id="summary"></div>
 
-      <div class="buttons">
-        <button class="secondary" type="button" onclick="editData()">修改</button>
+      <div class="buttons" id="editButtonWrap">
+        <button class="secondary" type="button" onclick="editData()">??</button>
       </div>
     </div>
   </section>
 
   <div id="customAlert" class="custom-alert">
     <div class="custom-alert-box">
-      <h2>提醒</h2>
+      <h2>??</h2>
       <p id="customAlertText"></p>
-      <button type="button" onclick="closeMessage()">知道了</button>
+      <button type="button" onclick="closeMessage()">???</button>
     </div>
   </div>
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
-    const WEDDING_DATE = "2026年11月7日（六）";
-    const WEDDING_TIME = "12:00 婚宴入席　12:30 婚宴開始";
-    const WEDDING_LOCATION = "251新北市淡水區中正路382號";
-    const WEDDING_TRAFFIC = "交通資訊將於確認後補充，您可先透過 Google 地圖或 Apple 地圖查看宴客地點。";
+    const WEDDING_DATE = "2026?11?7????";
+    const WEDDING_TIME = "12:00 ?????12:30 ????";
+    const WEDDING_LOCATION = "251?????????382?";
+    const WEDDING_TRAFFIC = "??????????????????????????????";
+    const GOOGLE_MAP_URL = "https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
+    const APPLE_MAP_URL = "https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82";
+    const SEAT_MAP_IMAGE_URL = "https://x87gp6.github.io/seat-map.jpg";
+    const PHOTO_ALBUM_URL = "https://x87gp6.github.io/photos";
+
+    const EDIT_LOCK_TIME = new Date("2026-11-05T12:00:00+08:00");
+    const WEDDING_START_TIME = new Date("2026-11-07T12:00:00+08:00");
+    const THANK_YOU_TIME = new Date("2026-11-10T12:00:00+08:00");
+    let countdownTimer = null;
 
     let formData = {};
     let verifiedEmail = "";
@@ -441,13 +510,19 @@
     }
 
     function editData() {
+      if (isAfterEditLock()) {
+        showMessage("???????????????????? Email ??????");
+        updatePage3Mode(formData);
+        return;
+      }
+
       fillFormData(formData);
       goToPage(2);
     }
 
     function isAttending() {
       const attendance = document.getElementById("attendance").value;
-      return attendance.includes("出席") && !attendance.includes("無法");
+      return attendance.includes("??") && !attendance.includes("??");
     }
 
     function toggleAttendanceDetails() {
@@ -484,30 +559,119 @@
         isEmailVerified = false;
 
         const status = document.getElementById("emailVerifyStatus");
-        status.innerText = "Email 尚未驗證";
+        status.innerText = "Email ????";
         status.style.color = "#b65b00";
       }
     }
 
-    function renderSummary(data) {
+    function isAfterEditLock() {
+      return new Date() >= EDIT_LOCK_TIME;
+    }
+
+    function isAfterThankYouTime() {
+      return new Date() >= THANK_YOU_TIME;
+    }
+
+    function updatePage3Mode(data) {
+      const title = document.getElementById("page3Title");
+      const intro = document.getElementById("page3Intro");
+      const editWrap = document.getElementById("editButtonWrap");
+
+      if (isAfterThankYouTime()) {
+        title.innerText = "????";
+        intro.innerText = "?????????????????????????????????????????????";
+        editWrap.style.display = "none";
+        renderThankYou();
+        return;
+      }
+
+      title.innerText = "????????";
+      editWrap.style.display = isAfterEditLock() ? "none" : "flex";
+      intro.innerText = isAfterEditLock()
+        ? "??????????????????????????????"
+        : "??????????????????????????????";
+
+      renderSummary(data);
+    }
+
+    function renderThankYou() {
       document.getElementById("summary").innerHTML = `
         <div class="summary-section">
-          <div><strong>日期：</strong>${WEDDING_DATE}</div>
-          <div><strong>時間：</strong>${WEDDING_TIME}</div>
-          <div><strong>地點：</strong>${WEDDING_LOCATION}</div>
-          <div><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
-          <div><strong>Email：</strong>${data.email || ""}</div>
+          <div>??????????</div>
+          <div>?????????????????????????</div>
         </div>
 
         <div>
-          <div><strong>姓名：</strong>${data.name || ""}</div>
-          <div><strong>與新人關係：</strong>${data.relationship || ""}</div>
-          <div><strong>是否出席：</strong>${data.attendance || ""}</div>
-          <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
-          <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
-          <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
+          <div><strong>?????</strong></div>
+          <a class="photo-link" href="${PHOTO_ALBUM_URL}" target="_blank" rel="noopener">???????</a>
         </div>
       `;
+    }
+
+    function renderSummary(data) {
+      const showLockedInfo = isAfterEditLock();
+      const tableNoHtml = showLockedInfo
+        ? `<div><strong>???</strong>${data.tableNo || "????"}</div>`
+        : "";
+      const seatMapHtml = showLockedInfo
+        ? `<div><strong>?????</strong><br><a class="seat-map-link" href="${SEAT_MAP_IMAGE_URL}" target="_blank" rel="noopener">??????</a></div>`
+        : "";
+
+      document.getElementById("summary").innerHTML = `
+        <div class="summary-section">
+          <div><strong>???</strong>${WEDDING_DATE}</div>
+          <div><strong>???</strong>${WEDDING_TIME}</div>
+          <div><strong>?????</strong>${WEDDING_LOCATION}</div>
+
+          <div class="map-links">
+            <a href="${GOOGLE_MAP_URL}" target="_blank" rel="noopener">Google ??</a>
+            <a href="${APPLE_MAP_URL}" target="_blank" rel="noopener">Apple ??</a>
+          </div>
+
+          <div><strong>???</strong>${WEDDING_TRAFFIC}</div>
+        </div>
+
+        <div>
+          ${tableNoHtml}
+          ${seatMapHtml}
+          <div><strong>???</strong>${data.name || ""}</div>
+          <div><strong>??????</strong>${data.relationship || ""}</div>
+          <div><strong>?????</strong>${data.attendance || ""}</div>
+          <div><strong>?????</strong>${data.guestCount ?? 0}</div>
+          <div><strong>?????</strong>${data.childSeat ?? 0}</div>
+          <div><strong>?????</strong>${data.vegetarian ?? 0}</div>
+          <div><strong>Email?</strong>${data.email || ""}</div>
+        </div>
+      `;
+    }
+
+    function updateCountdown() {
+      const wrap = document.getElementById("countdownWrap");
+      const now = new Date();
+
+      if (now >= WEDDING_START_TIME || now >= THANK_YOU_TIME) {
+        wrap.style.display = "none";
+        if (countdownTimer) clearInterval(countdownTimer);
+        return;
+      }
+
+      const diff = WEDDING_START_TIME - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("cdDays").innerText = days;
+      document.getElementById("cdHours").innerText = hours;
+      document.getElementById("cdMinutes").innerText = minutes;
+      document.getElementById("cdSeconds").innerText = seconds;
+      wrap.style.display = "block";
+    }
+
+    function startCountdown() {
+      updateCountdown();
+      if (countdownTimer) clearInterval(countdownTimer);
+      countdownTimer = setInterval(updateCountdown, 1000);
     }
 
     function fillFormData(data) {
@@ -524,7 +688,7 @@
       verifiedEmail = data.email || "";
 
       const status = document.getElementById("emailVerifyStatus");
-      status.innerText = "Email 已驗證";
+      status.innerText = "Email ???";
       status.style.color = "green";
 
       toggleAttendanceDetails();
@@ -548,17 +712,17 @@
       let vegetarian = 0;
 
       if (!name) {
-        showMessage("請填寫您的大名");
+        showMessage("???????");
         return null;
       }
 
       if (!relationship) {
-        showMessage("請選擇與新人的關係");
+        showMessage("?????????");
         return null;
       }
 
       if (!attendance) {
-        showMessage("請選擇是否出席婚宴");
+        showMessage("?????????");
         return null;
       }
 
@@ -568,28 +732,28 @@
         vegetarian = Number(document.getElementById("vegetarian").value);
 
         if (guestCount < 1) {
-          showMessage("出席人數至少為 1 人");
+          showMessage("??????? 1 ?");
           return null;
         }
 
         if (childSeat > guestCount) {
-          showMessage("兒童座椅數量不可大於出席人數");
+          showMessage("??????????????");
           return null;
         }
 
         if (vegetarian > guestCount) {
-          showMessage("素食人數不可大於出席人數");
+          showMessage("????????????");
           return null;
         }
       }
 
       if (!email) {
-        showMessage("請填寫 Email");
+        showMessage("??? Email");
         return null;
       }
 
       if (!isEmailVerified || email !== verifiedEmail) {
-        showMessage("請先完成 Email 驗證");
+        showMessage("???? Email ??");
         return null;
       }
 
@@ -616,11 +780,11 @@
       const email = emailInput.value.trim();
 
       if (!email) {
-        showMessage("請先填寫 Email");
+        showMessage("???? Email");
         return;
       }
 
-      status.innerText = "驗證碼寄送中...";
+      status.innerText = "??????...";
       status.style.color = "#7b4f3a";
 
       fetch(GAS_URL, {
@@ -637,21 +801,21 @@
           verifiedEmail = "";
           document.getElementById("emailCode").value = "";
 
-          status.innerText = "驗證碼已寄出，請至 Email 查看";
+          status.innerText = "????????? Email ??";
           status.style.color = "#7b4f3a";
 
-          showMessage("驗證碼已寄出，請至 Email 查看。");
+          showMessage("????????? Email ???");
         } else {
-          status.innerText = "驗證碼寄送失敗";
+          status.innerText = "???????";
           status.style.color = "red";
-          showMessage(data.message || "驗證碼寄送失敗");
+          showMessage(data.message || "???????");
         }
       })
       .catch(err => {
         console.error(err);
-        status.innerText = "驗證碼寄送失敗";
+        status.innerText = "???????";
         status.style.color = "red";
-        showMessage("驗證碼寄送失敗，請稍後再試");
+        showMessage("?????????????");
       });
     }
 
@@ -661,16 +825,16 @@
       const status = document.getElementById("emailVerifyStatus");
 
       if (!email) {
-        showMessage("請先填寫 Email");
+        showMessage("???? Email");
         return;
       }
 
       if (!code) {
-        showMessage("請輸入驗證碼");
+        showMessage("??????");
         return;
       }
 
-      status.innerText = "驗證中...";
+      status.innerText = "???...";
       status.style.color = "#7b4f3a";
 
       fetch(GAS_URL, {
@@ -687,28 +851,28 @@
           isEmailVerified = true;
           verifiedEmail = email;
 
-          status.innerText = "Email 驗證成功";
+          status.innerText = "Email ????";
           status.style.color = "green";
 
-          showMessage("Email 驗證成功");
+          showMessage("Email ????");
         } else {
           isEmailVerified = false;
           verifiedEmail = "";
 
-          status.innerText = "驗證碼錯誤或已失效";
+          status.innerText = "?????????";
           status.style.color = "red";
 
-          showMessage(data.message || "驗證碼錯誤或已失效");
+          showMessage(data.message || "?????????");
         }
       })
       .catch(err => {
         console.error(err);
         isEmailVerified = false;
 
-        status.innerText = "驗證失敗";
+        status.innerText = "????";
         status.style.color = "red";
 
-        showMessage("驗證失敗，請稍後再試");
+        showMessage("??????????");
       });
     }
 
@@ -733,16 +897,17 @@
             currentToken = data.token;
           }
 
-          renderSummary(formData);
+          updatePage3Mode(formData);
+          startCountdown();
           goToPage(3);
-          showMessage("登記資料已送出。");
+          showMessage("????????");
         } else {
-          showMessage(data.message || "送出失敗，請稍後再試。");
+          showMessage(data.message || "???????????");
         }
       })
       .catch(err => {
         console.error(err);
-        showMessage("送出失敗，請確認網路或稍後再試。");
+        showMessage("????????????????");
       });
     }
 
@@ -771,20 +936,22 @@
               guestCount: Number(d.guestCount || 0),
               childSeat: Number(d.childSeat || 0),
               vegetarian: Number(d.vegetarian || 0),
-              email: d.email || ""
+              email: d.email || "",
+              tableNo: d.tableNo || ""
             };
 
             fillFormData(formData);
-            renderSummary(formData);
+            updatePage3Mode(formData);
+            startCountdown();
             goToPage(3);
           } else {
-            showMessage("查無登記資料，請重新填寫。");
+            showMessage("?????????????");
             goToPage(2);
           }
         })
         .catch(err => {
           console.error(err);
-          showMessage("載入登記資料失敗，請稍後再試。");
+          showMessage("???????????????");
           goToPage(2);
         });
       } else {
