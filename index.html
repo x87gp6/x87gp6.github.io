@@ -169,6 +169,12 @@
       min-width: 150px;
     }
 
+    .summary-section {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
     #emailVerifyStatus {
       text-align: center;
       font-weight: 700;
@@ -187,9 +193,7 @@
       z-index: 9999;
     }
 
-    .custom-alert.active {
-      display: flex;
-    }
+    .custom-alert.active { display: flex; }
 
     .custom-alert-box {
       width: min(100%, 360px);
@@ -251,7 +255,6 @@
 
     @media (max-width: 390px) {
       .card { padding: 22px 16px; }
-
       h1 { letter-spacing: 0.05em; }
     }
   </style>
@@ -378,9 +381,15 @@
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
+    const WEDDING_DATE = "2026年11月7日（六）";
+    const WEDDING_TIME = "12:00 婚宴入席　12:30 婚宴開始";
+    const WEDDING_LOCATION = "251新北市淡水區中正路382號";
+    const WEDDING_TRAFFIC = "交通資訊將於確認後補充，您可先透過 Google 地圖或 Apple 地圖查看宴客地點。";
+
     let formData = {};
     let verifiedEmail = "";
     let isEmailVerified = false;
+    let currentToken = "";
 
     function showMessage(message) {
       document.getElementById("customAlertText").innerText = message;
@@ -482,13 +491,22 @@
 
     function renderSummary(data) {
       document.getElementById("summary").innerHTML = `
-        <div><strong>姓名：</strong>${data.name || ""}</div>
-        <div><strong>與新人關係：</strong>${data.relationship || ""}</div>
-        <div><strong>是否出席：</strong>${data.attendance || ""}</div>
-        <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
-        <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
-        <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
-        <div><strong>Email：</strong>${data.email || ""}</div>
+        <div class="summary-section">
+          <div><strong>日期：</strong>${WEDDING_DATE}</div>
+          <div><strong>時間：</strong>${WEDDING_TIME}</div>
+          <div><strong>地點：</strong>${WEDDING_LOCATION}</div>
+          <div><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
+          <div><strong>Email：</strong>${data.email || ""}</div>
+        </div>
+
+        <div>
+          <div><strong>姓名：</strong>${data.name || ""}</div>
+          <div><strong>與新人關係：</strong>${data.relationship || ""}</div>
+          <div><strong>是否出席：</strong>${data.attendance || ""}</div>
+          <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
+          <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
+          <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
+        </div>
       `;
     }
 
@@ -704,15 +722,20 @@
         method: "POST",
         body: JSON.stringify({
           action: "submit",
+          token: currentToken,
           ...formData
         })
       })
       .then(res => res.json())
       .then(data => {
         if (data.status === "success") {
+          if (data.token) {
+            currentToken = data.token;
+          }
+
           renderSummary(formData);
           goToPage(3);
-          showMessage("登記成功！確認信已寄出，請至 Email 查看。");
+          showMessage("登記資料已送出。");
         } else {
           showMessage(data.message || "送出失敗，請稍後再試。");
         }
@@ -726,14 +749,14 @@
     window.addEventListener("load", function () {
       initNumberSelects();
 
-      const token = getTokenFromUrl();
+      currentToken = getTokenFromUrl();
 
-      if (token) {
+      if (currentToken) {
         fetch(GAS_URL, {
           method: "POST",
           body: JSON.stringify({
             action: "getData",
-            token: token
+            token: currentToken
           })
         })
         .then(res => res.json())
