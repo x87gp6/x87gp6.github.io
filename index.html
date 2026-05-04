@@ -348,6 +348,12 @@
       margin-top: 12px;
     }
 
+    .seat-map-link {
+      margin-left: 8px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
     @media (max-width: 600px) {
       .page {
         align-items: flex-start;
@@ -526,9 +532,9 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T11:45:00",
-      editDeadline: "2026-05-04T11:40:00",
-      thanksDate: "2026-05-04T11:50:00"
+      wedding: "2026-05-004T12:20:00",
+      editDeadline: "2026-05-04T12:15:00",
+      thanksDate: "2026-05-04T12:25:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
@@ -724,8 +730,8 @@
       }
 
       if (isAfterEditLock()) {
-        title.innerText = "結束登記";
-        intro.innerText = "登記截止，資料已停止修改。以下為您的婚宴資訊，請依照資訊準時入席。";
+        title.innerText = "座位訊息如下";
+        intro.innerText = "以下為您的婚宴資訊，請依照資訊準時入席。若有問題，請直接回覆 Email 與我們聯繫。";
         editWrap.style.display = "none";
         editWrap.hidden = true;
       } else {
@@ -755,11 +761,15 @@
     function renderSummary(data) {
       const showLockedInfo = isAfterEditLock();
       const tableNoHtml = showLockedInfo
-        ? `<div><strong>桌號：</strong>${data.tableNo || "尚未公告"}</div>`
+        ? `
+          <div style="display:flex; align-items:center; flex-wrap:nowrap;">
+            <span>${data.tableNo || "尚未公告"}</span>
+            <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
+          </div>
+        `
         : "";
-      const seatMapHtml = showLockedInfo
-        ? `<div><strong>位置圖示：</strong><br><button class="seat-map-link" type="button" onclick="openSeatMap()">查看位置圖示</button></div>`
-        : "";
+
+      const seatMapHtml = "";
 
       document.getElementById("summary").innerHTML = `
         <div class="summary-section">
@@ -784,7 +794,6 @@
           <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
           <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
           <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
-          <div><strong>Email：</strong>${data.email || ""}</div>
         </div>
       `;
     }
@@ -797,21 +806,6 @@
       title.innerText = "結束登記";
       intro.innerText = "婚宴出席登記已截止。若已完成登記，請使用 Email 中的專屬連結查看婚宴資訊。";
       editWrap.style.display = "none";
-
-      document.getElementById("summary").innerHTML = `
-        <div class="summary-section">
-          <div><strong>日期：</strong>${WEDDING_DATE}</div>
-          <div><strong>時間：</strong>${WEDDING_TIME}</div>
-          <div><strong>宴客地點：</strong>${WEDDING_LOCATION}</div>
-
-          <div class="map-links">
-            <a href="${GOOGLE_MAP_URL}" target="_blank" rel="noopener">Google 地圖</a>
-            <a href="${APPLE_MAP_URL}" target="_blank" rel="noopener">Apple 地圖</a>
-          </div>
-
-          <div><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
-        </div>
-      `;
     }
 
     function updateCountdown() {
