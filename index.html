@@ -532,9 +532,9 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T13:45:00",
-      editDeadline: "2026-05-04T13:40:00",
-      thanksDate: "2026-05-04T13:48:00"
+      wedding: "2026-11-07T12:00:00",
+      editDeadline: "2026-11-05T12:00:00",
+      thanksDate: "2026-11-10T12:00:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
@@ -731,7 +731,7 @@
 
       if (isAfterEditLock()) {
         title.innerText = "座位訊息如下";
-        intro.innerText = "以下為您的婚宴資訊，請依照資訊準時入席。若有問題，請直接回覆 Email 與我們聯繫。";
+        intro.innerText = "請賓客準時入席。若有問題，請直接回覆 Email 與我們聯繫。";
         editWrap.style.display = "none";
         editWrap.hidden = true;
       } else {
@@ -763,6 +763,7 @@
       const tableNoHtml = showLockedInfo
         ? `
           <div style="display:flex; align-items:center; flex-wrap:nowrap;">
+            <strong>桌號：</strong>
             <span>${data.tableNo || "尚未公告"}</span>
             <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
           </div>
