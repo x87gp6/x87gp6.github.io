@@ -526,9 +526,9 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T11:15:00",
-      editDeadline: "2026-05-04T11:100:00",
-      thanksDate: "2026-05-04T11:20:00"
+      wedding: "2026-05-04T11:45:00",
+      editDeadline: "2026-05-04T11:40:00",
+      thanksDate: "2026-05-04T11:50:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
@@ -550,6 +550,8 @@
     let isEmailVerified = false;
     let currentToken = "";
     let loadedFromToken = false;
+    let serverEditClosed = null;
+    let serverThankYouOpened = null;
 
     function showMessage(message) {
       document.getElementById("customAlertText").innerText = message;
@@ -701,11 +703,11 @@
     }
 
     function isAfterEditLock() {
-      return new Date() >= EDIT_LOCK_TIME;
+      return serverEditClosed === null ? new Date() >= EDIT_LOCK_TIME : serverEditClosed;
     }
 
     function isAfterThankYouTime() {
-      return new Date() >= THANK_YOU_TIME;
+      return serverThankYouOpened === null ? new Date() >= THANK_YOU_TIME : serverThankYouOpened;
     }
 
     function updatePage3Mode(data) {
@@ -721,11 +723,17 @@
         return;
       }
 
-      title.innerText = isAfterEditLock() && loadedFromToken ? "結束登記" : "您的登記資料如下";
-      editWrap.style.display = isAfterEditLock() ? "none" : "flex";
-      intro.innerText = isAfterEditLock()
-        ? "以下為您的婚宴資訊。登記資料已停止修改，請依照資訊準時入席。"
-        : "以下為您的出席登記資料。若需要調整內容，請點選下方「修改」。";
+      if (isAfterEditLock()) {
+        title.innerText = "結束登記";
+        intro.innerText = "登記截止，資料已停止修改。以下為您的婚宴資訊，請依照資訊準時入席。";
+        editWrap.style.display = "none";
+        editWrap.hidden = true;
+      } else {
+        title.innerText = "您的登記資料如下";
+        intro.innerText = "以下為您的出席登記資料。若需要調整內容，請點選下方「修改」。";
+        editWrap.style.display = "flex";
+        editWrap.hidden = false;
+      }
 
       renderSummary(data);
     }
@@ -1090,6 +1098,8 @@
         .then(res => res.json())
         .then(data => {
           if (data.status === "success") {
+            serverEditClosed = Boolean(data.editClosed);
+            serverThankYouOpened = Boolean(data.thankYouOpened);
             const d = data.data;
 
             formData = {
