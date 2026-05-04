@@ -128,6 +128,18 @@
       color: #5a3e2b;
       font-weight: 700;
       text-decoration: none;
+      transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+    }
+
+    .map-links a:hover,
+    .map-links a:focus-visible {
+      background: rgba(123,79,58,0.22);
+      box-shadow: 0 5px 14px rgba(123,79,58,0.16);
+    }
+
+    .map-links a:active {
+      background: rgba(123,79,58,0.32);
+      transform: scale(0.97);
     }
 
     .buttons {
@@ -148,15 +160,29 @@
       cursor: pointer;
       background: #7b4f3a;
       color: white;
-      transition: 0.2s;
+      transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+      box-shadow: 0 5px 14px rgba(123,79,58,0.22);
     }
 
-    button:active {
-      transform: scale(0.98);
-      opacity: 0.9;
+    button:hover,
+    button:focus-visible {
+      background: #5f3a2a;
+      box-shadow: 0 7px 18px rgba(95,58,42,0.32);
     }
 
-    button.secondary { background: #777; }
+    button:active,
+    button.pressed {
+      background: #3f261c;
+      transform: scale(0.96);
+      box-shadow: inset 0 3px 8px rgba(0,0,0,0.28);
+      opacity: 1;
+    }
+
+    button.secondary { background: #777; box-shadow: 0 5px 14px rgba(0,0,0,0.16); }
+    button.secondary:hover,
+    button.secondary:focus-visible { background: #555; }
+    button.secondary:active,
+    button.secondary.pressed { background: #333; }
 
     .summary {
       line-height: 2;
@@ -223,6 +249,20 @@
       color: #5a3e2b;
       font-weight: 700;
       text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+    }
+
+    .photo-link:hover, .seat-map-link:hover,
+    .photo-link:focus-visible, .seat-map-link:focus-visible {
+      background: rgba(123,79,58,0.22);
+      box-shadow: 0 5px 14px rgba(123,79,58,0.16);
+    }
+
+    .photo-link:active, .seat-map-link:active {
+      background: rgba(123,79,58,0.32);
+      transform: scale(0.97);
     }
 
     #emailVerifyStatus {
@@ -269,6 +309,43 @@
     .custom-alert-box button {
       margin-top: 20px;
       width: 100%;
+    }
+
+    .seat-map-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.64);
+      z-index: 10000;
+    }
+
+    .seat-map-modal.active { display: flex; }
+
+    .seat-map-box {
+      width: min(100%, 920px);
+      max-height: 92svh;
+      background: #fff;
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 14px 48px rgba(0,0,0,0.38);
+      text-align: center;
+    }
+
+    .seat-map-box img {
+      width: 100%;
+      max-height: calc(92svh - 88px);
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      background: #f6f1ec;
+    }
+
+    .seat-map-close {
+      width: 100%;
+      margin-top: 12px;
     }
 
     @media (max-width: 600px) {
@@ -438,20 +515,27 @@
     </div>
   </div>
 
+  <div id="seatMapModal" class="seat-map-modal" onclick="closeSeatMap(event)">
+    <div class="seat-map-box">
+      <img id="seatMapImage" src="" alt="婚宴位置圖示">
+      <button class="seat-map-close secondary" type="button" onclick="closeSeatMap()">關閉</button>
+    </div>
+  </div>
+
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T10:40:00",
-      editDeadline: "2026-05-04T10:38:00",
-      thanksDate: "2026-05-04T10:45:00"
+      wedding: "2026-05-04T11:15:00",
+      editDeadline: "2026-05-04T11:100:00",
+      thanksDate: "2026-05-04T11:20:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
     const WEDDING_TRAFFIC = "交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。";
     const GOOGLE_MAP_URL = "https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
     const APPLE_MAP_URL = "https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82";
-    const SEAT_MAP_IMAGE_URL = "./TableNo.PNG";
+    const SEAT_MAP_IMAGE_URL = "TableNo.PNG";
     const PHOTO_ALBUM_URL = "https://drive.google.com/drive/folders/1xt7F8LDUCh19NoDhAATHm-pxHNoySbqa?usp=sharing";
 
     const EDIT_LOCK_TIME = parseTaipeiTime(CONFIG.editDeadline);
@@ -465,6 +549,7 @@
     let verifiedEmail = "";
     let isEmailVerified = false;
     let currentToken = "";
+    let loadedFromToken = false;
 
     function showMessage(message) {
       document.getElementById("customAlertText").innerText = message;
@@ -474,6 +559,24 @@
     function closeMessage() {
       document.getElementById("customAlert").classList.remove("active");
     }
+
+    function openSeatMap() {
+      document.getElementById("seatMapImage").src = SEAT_MAP_IMAGE_URL;
+      document.getElementById("seatMapModal").classList.add("active");
+    }
+
+    function closeSeatMap(event) {
+      if (event && event.target !== document.getElementById("seatMapModal")) return;
+      document.getElementById("seatMapModal").classList.remove("active");
+    }
+
+    document.addEventListener("click", function (event) {
+      const btn = event.target.closest("button");
+      if (!btn) return;
+      btn.classList.add("pressed");
+      window.setTimeout(() => btn.classList.remove("pressed"), 160);
+    });
+
     function parseTaipeiTime(value) {
       return new Date(value + "+08:00");
     }
@@ -618,7 +721,7 @@
         return;
       }
 
-      title.innerText = "您的登記資料如下";
+      title.innerText = isAfterEditLock() && loadedFromToken ? "結束登記" : "您的登記資料如下";
       editWrap.style.display = isAfterEditLock() ? "none" : "flex";
       intro.innerText = isAfterEditLock()
         ? "以下為您的婚宴資訊。登記資料已停止修改，請依照資訊準時入席。"
@@ -647,7 +750,7 @@
         ? `<div><strong>桌號：</strong>${data.tableNo || "尚未公告"}</div>`
         : "";
       const seatMapHtml = showLockedInfo
-        ? `<div><strong>位置圖示：</strong><br><a class="seat-map-link" href="${SEAT_MAP_IMAGE_URL}" target="_blank" rel="noopener">查看位置圖示</a></div>`
+        ? `<div><strong>位置圖示：</strong><br><button class="seat-map-link" type="button" onclick="openSeatMap()">查看位置圖示</button></div>`
         : "";
 
       document.getElementById("summary").innerHTML = `
@@ -674,6 +777,31 @@
           <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
           <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
           <div><strong>Email：</strong>${data.email || ""}</div>
+        </div>
+      `;
+    }
+
+    function renderClosedRegistration() {
+      const title = document.getElementById("page3Title");
+      const intro = document.getElementById("page3Intro");
+      const editWrap = document.getElementById("editButtonWrap");
+
+      title.innerText = "結束登記";
+      intro.innerText = "婚宴出席登記已截止。若已完成登記，請使用 Email 中的專屬連結查看婚宴資訊。";
+      editWrap.style.display = "none";
+
+      document.getElementById("summary").innerHTML = `
+        <div class="summary-section">
+          <div><strong>日期：</strong>${WEDDING_DATE}</div>
+          <div><strong>時間：</strong>${WEDDING_TIME}</div>
+          <div><strong>宴客地點：</strong>${WEDDING_LOCATION}</div>
+
+          <div class="map-links">
+            <a href="${GOOGLE_MAP_URL}" target="_blank" rel="noopener">Google 地圖</a>
+            <a href="${APPLE_MAP_URL}" target="_blank" rel="noopener">Apple 地圖</a>
+          </div>
+
+          <div><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
         </div>
       `;
     }
@@ -949,6 +1077,7 @@
       updateStaticWeddingInfo();
 
       currentToken = getTokenFromUrl();
+      loadedFromToken = Boolean(currentToken);
 
       if (currentToken) {
         fetch(GAS_URL, {
@@ -988,6 +1117,10 @@
           showMessage("載入登記資料失敗，請稍後再試。");
           goToPage(2);
         });
+      } else if (isAfterEditLock()) {
+        renderClosedRegistration();
+        startCountdown();
+        goToPage(3);
       } else {
         goToPage(1);
         toggleAttendanceDetails();
