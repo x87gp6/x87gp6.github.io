@@ -75,6 +75,7 @@
     #page1 .card { background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.9)), url("./p1b.jpg"); }
     #page2 .card { background-image: linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.92)), url("./p2b.jpg"); }
     #page3 .card { background-image: linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.92)), url("./p3b.jpg"); }
+    #page3 .card.thanks-bg { background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.90)), url("./P3c.jpg"); }
 
     .card-scroll {
       flex: 1;
@@ -801,14 +802,18 @@
       const title = document.getElementById("page3Title");
       const intro = document.getElementById("page3Intro");
       const editWrap = document.getElementById("editButtonWrap");
+      const page3Card = document.querySelector("#page3 .card");
 
       if (isAfterThankYouTime()) {
+        if (page3Card) page3Card.classList.add("thanks-bg");
         title.innerText = "誠摯感謝";
         intro.innerText = "謝謝您撥冗參與我們的人生重要時刻。宴客當天照片可透過下方連結觀賞，並選擇您喜歡的照片下載。";
         editWrap.style.display = "none";
         renderThankYou();
         return;
       }
+
+      if (page3Card) page3Card.classList.remove("thanks-bg");
 
       if (isAfterEditLock()) {
         title.innerText = "座位訊息如下";
@@ -894,6 +899,8 @@
       const title = document.getElementById("page3Title");
       const intro = document.getElementById("page3Intro");
       const editWrap = document.getElementById("editButtonWrap");
+      const page3Card = document.querySelector("#page3 .card");
+      if (page3Card) page3Card.classList.remove("thanks-bg");
 
       title.innerText = "結束登記";
       intro.innerText = "婚宴出席登記已截止。若已完成登記，請使用 Email 中的專屬連結查看婚宴資訊。";
