@@ -449,8 +449,8 @@
         <label>是否出席婚宴：</label>
         <select id="attendance" required onchange="toggleAttendanceDetails()">
           <option value="">請選擇</option>
-          <option>⭕️ 出席</option>
-          <option>❌ 無法出席</option>
+          <option value="true">⭕️ 出席</option>
+          <option value="false">❌ 無法出席</option>
         </select>
 
         <div id="attendanceDetails" style="display:none;">
@@ -532,9 +532,9 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
     const CONFIG = {
-      wedding: "2026-05-04T14:58:00",
-      editDeadline: "2026-05-04T14:55:00",
-      thanksDate: "2026-05-04T15:00:00"
+      wedding: "2026-05-04T15:25:00",
+      editDeadline: "2026-05-04T15:23:00",
+      thanksDate: "2026-05-04T15:28:00"
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
@@ -665,8 +665,7 @@
     }
 
     function isAttending() {
-      const attendance = document.getElementById("attendance").value;
-      return attendance.includes("出席") && !attendance.includes("無法");
+      return document.getElementById("attendance").value === "true";
     }
 
     function toggleAttendanceDetails() {
@@ -758,6 +757,14 @@
       `;
     }
 
+    function attendanceText(value) {
+      return normalizeAttendance(value) ? "⭕️ 出席" : "❌ 無法出席";
+    }
+
+    function normalizeAttendance(value) {
+      return value === true || value === "true" || value === "TRUE" || value === "⭕️ 出席" || value === "出席";
+    }
+
     function renderSummary(data) {
       const showLockedInfo = isAfterEditLock();
       const tableNoHtml = showLockedInfo
@@ -793,7 +800,7 @@
           ${seatMapHtml}
           <div><strong>姓名：</strong>${data.name || ""}</div>
           <div><strong>與新人關係：</strong>${data.relationship || ""}</div>
-          <div><strong>是否出席：</strong>${data.attendance || ""}</div>
+          <div><strong>是否出席：</strong>${attendanceText(data.attendance)}</div>
           <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
           <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
           <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
@@ -843,7 +850,7 @@
     function fillFormData(data) {
       document.getElementById("guestName").value = data.name || "";
       document.getElementById("relationship").value = data.relationship || "";
-      document.getElementById("attendance").value = data.attendance || "";
+      document.getElementById("attendance").value = normalizeAttendance(data.attendance) ? "true" : "false";
 
       document.getElementById("guestCount").value = String(Number(data.guestCount || 0));
       document.getElementById("childSeat").value = String(Number(data.childSeat || 0));
@@ -870,7 +877,8 @@
 
       const name = document.getElementById("guestName").value.trim();
       const relationship = document.getElementById("relationship").value;
-      const attendance = document.getElementById("attendance").value;
+      const attendanceValue = document.getElementById("attendance").value;
+      const attendance = attendanceValue === "true";
       const email = document.getElementById("email").value.trim();
 
       let guestCount = 0;
@@ -887,7 +895,7 @@
         return null;
       }
 
-      if (!attendance) {
+      if (attendanceValue === "") {
         showMessage("請選擇是否出席婚宴");
         return null;
       }
@@ -1102,7 +1110,7 @@
             formData = {
               name: d.name || "",
               relationship: d.relationship || "",
-              attendance: d.attendance || "",
+              attendance: normalizeAttendance(d.attendance),
               guestCount: Number(d.guestCount || 0),
               childSeat: Number(d.childSeat || 0),
               vegetarian: Number(d.vegetarian || 0),
