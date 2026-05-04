@@ -265,11 +265,40 @@
       transform: scale(0.97);
     }
 
-    #emailVerifyStatus {
-      text-align: center;
+    .email-label-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
       font-weight: 700;
-      margin: 14px 0 0;
+      line-height: 1.5;
+      flex-wrap: wrap;
+    }
+
+    .email-label-row label {
+      margin-top: 0;
+    }
+
+    #emailVerifyStatus {
+      font-size: 0.92rem;
+      font-weight: 800;
       color: #b65b00;
+      white-space: nowrap;
+    }
+
+    .verify-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .verify-modal-actions button {
+      width: 100%;
+      margin-top: 0;
+      padding-left: 18px;
+      padding-right: 18px;
     }
 
     .custom-alert {
@@ -467,21 +496,15 @@
           <select id="vegetarian"></select>
         </div>
 
-        <label>電子喜帖寄送 Email：</label>
+        <div class="email-label-row">
+          <label for="email">電子喜帖寄送 Email：</label>
+          <span id="emailVerifyStatus">Email 尚未驗證</span>
+        </div>
         <input type="email" id="email" required placeholder="example@email.com" oninput="resetEmailVerification()">
 
         <div class="buttons" style="margin-top: 12px;">
           <button type="button" onclick="sendEmailCode()">寄送驗證碼</button>
         </div>
-
-        <label>請輸入 Email 驗證碼：</label>
-        <input type="text" id="emailCode" inputmode="numeric" pattern="[0-9]*" placeholder="請輸入 6 碼驗證碼">
-
-        <div class="buttons" style="margin-top: 12px;">
-          <button type="button" onclick="verifyEmailCode()">驗證 Email</button>
-        </div>
-
-        <p id="emailVerifyStatus">Email 尚未驗證</p>
 
         <div class="buttons">
           <button type="button" onclick="submitData()">送出</button>
@@ -521,6 +544,18 @@
       <h2>提醒</h2>
       <p id="customAlertText"></p>
       <button type="button" onclick="closeMessage()">知道了</button>
+    </div>
+  </div>
+
+  <div id="emailCodeModal" class="custom-alert">
+    <div class="custom-alert-box">
+      <h2>輸入驗證碼</h2>
+      <p>驗證碼已寄出，請至 Email 查看後輸入。</p>
+      <input type="text" id="emailCode" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="請輸入 6 碼驗證碼">
+      <div class="verify-modal-actions">
+        <button type="button" onclick="verifyEmailCode()">確認</button>
+        <button class="secondary" type="button" onclick="closeEmailCodeModal()">取消</button>
+      </div>
     </div>
   </div>
 
@@ -569,6 +604,15 @@
 
     function closeMessage() {
       document.getElementById("customAlert").classList.remove("active");
+    }
+
+    function openEmailCodeModal() {
+      document.getElementById("emailCodeModal").classList.add("active");
+      window.setTimeout(() => document.getElementById("emailCode").focus(), 80);
+    }
+
+    function closeEmailCodeModal() {
+      document.getElementById("emailCodeModal").classList.remove("active");
     }
 
     function openSeatMap() {
@@ -978,10 +1022,10 @@
           verifiedEmail = "";
           document.getElementById("emailCode").value = "";
 
-          status.innerText = "驗證碼已寄出，請至 Email 查看";
-          status.style.color = "#7b4f3a";
+          status.innerText = "Email 尚未驗證";
+          status.style.color = "#b65b00";
 
-          showMessage("驗證碼已寄出，請至 Email 查看。");
+          openEmailCodeModal();
         } else {
           status.innerText = "驗證碼寄送失敗";
           status.style.color = "red";
@@ -1028,28 +1072,25 @@
           isEmailVerified = true;
           verifiedEmail = email;
 
-          status.innerText = "Email 驗證成功";
+          status.innerText = "Email 已驗證";
           status.style.color = "green";
 
-          showMessage("Email 驗證成功");
+          closeEmailCodeModal();
         } else {
           isEmailVerified = false;
           verifiedEmail = "";
 
-          status.innerText = "驗證碼錯誤或已失效";
+          status.innerText = data.message || "驗證碼錯誤或已失效";
           status.style.color = "red";
-
-          showMessage(data.message || "驗證碼錯誤或已失效");
+          document.getElementById("emailCode").focus();
         }
       })
       .catch(err => {
         console.error(err);
         isEmailVerified = false;
 
-        status.innerText = "驗證失敗";
+        status.innerText = "驗證失敗，請稍後再試";
         status.style.color = "red";
-
-        showMessage("驗證失敗，請稍後再試");
       });
     }
 
