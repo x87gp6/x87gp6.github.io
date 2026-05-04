@@ -176,6 +176,47 @@
       color: #b65b00;
     }
 
+    .custom-alert {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.45);
+      z-index: 9999;
+    }
+
+    .custom-alert.active {
+      display: flex;
+    }
+
+    .custom-alert-box {
+      width: min(100%, 360px);
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .custom-alert-box h2 {
+      margin: 0 0 12px;
+      font-size: 1.25rem;
+      color: #5a3e2b;
+    }
+
+    .custom-alert-box p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .custom-alert-box button {
+      margin-top: 20px;
+      width: 100%;
+    }
+
     @media (max-width: 600px) {
       .page {
         align-items: flex-start;
@@ -199,7 +240,7 @@
 
       .buttons button { width: 100%; }
 
-      .map-links { grid-template-columns: 1fr 1fr }
+      .map-links { grid-template-columns: 1fr 1fr; }
 
       .summary strong {
         display: block;
@@ -218,7 +259,7 @@
 
 <body>
 
-  <section id="page1" class="page active">
+  <section id="page1" class="page">
     <div class="card">
       <h1>我們要結婚了</h1>
       <p>
@@ -321,11 +362,18 @@
       <div class="summary" id="summary"></div>
 
       <div class="buttons">
-        <button class="secondary" type="button" onclick="goToPage(2)">修改</button>
-        <button class="secondary" type="button" onclick="window.close()">關閉</button>
+        <button class="secondary" type="button" onclick="editData()">修改</button>
       </div>
     </div>
   </section>
+
+  <div id="customAlert" class="custom-alert">
+    <div class="custom-alert-box">
+      <h2>提醒</h2>
+      <p id="customAlertText"></p>
+      <button type="button" onclick="closeMessage()">知道了</button>
+    </div>
+  </div>
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
@@ -333,6 +381,26 @@
     let formData = {};
     let verifiedEmail = "";
     let isEmailVerified = false;
+
+    function showMessage(message) {
+      document.getElementById("customAlertText").innerText = message;
+      document.getElementById("customAlert").classList.add("active");
+    }
+
+    function closeMessage() {
+      document.getElementById("customAlert").classList.remove("active");
+    }
+
+    function getTokenFromUrl() {
+      const searchToken = new URLSearchParams(window.location.search).get("token");
+      if (searchToken) return searchToken;
+
+      const hashText = window.location.hash.replace("#", "");
+      const hashToken = new URLSearchParams(hashText).get("token");
+      if (hashToken) return hashToken;
+
+      return "";
+    }
 
     function initNumberSelects() {
       const ids = ["guestCount", "childSeat", "vegetarian"];
@@ -361,6 +429,11 @@
 
       document.getElementById("page" + pageNumber).classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function editData() {
+      fillFormData(formData);
+      goToPage(2);
     }
 
     function isAttending() {
@@ -457,17 +530,17 @@
       let vegetarian = 0;
 
       if (!name) {
-        alert("請填寫您的大名");
+        showMessage("請填寫您的大名");
         return null;
       }
 
       if (!relationship) {
-        alert("請選擇與新人的關係");
+        showMessage("請選擇與新人的關係");
         return null;
       }
 
       if (!attendance) {
-        alert("請選擇是否出席婚宴");
+        showMessage("請選擇是否出席婚宴");
         return null;
       }
 
@@ -477,28 +550,28 @@
         vegetarian = Number(document.getElementById("vegetarian").value);
 
         if (guestCount < 1) {
-          alert("出席人數至少為 1 人");
+          showMessage("出席人數至少為 1 人");
           return null;
         }
 
         if (childSeat > guestCount) {
-          alert("兒童座椅數量不可大於出席人數");
+          showMessage("兒童座椅數量不可大於出席人數");
           return null;
         }
 
         if (vegetarian > guestCount) {
-          alert("素食人數不可大於出席人數");
+          showMessage("素食人數不可大於出席人數");
           return null;
         }
       }
 
       if (!email) {
-        alert("請填寫 Email");
+        showMessage("請填寫 Email");
         return null;
       }
 
       if (!isEmailVerified || email !== verifiedEmail) {
-        alert("請先完成 Email 驗證");
+        showMessage("請先完成 Email 驗證");
         return null;
       }
 
@@ -525,7 +598,7 @@
       const email = emailInput.value.trim();
 
       if (!email) {
-        alert("請先填寫 Email");
+        showMessage("請先填寫 Email");
         return;
       }
 
@@ -549,18 +622,18 @@
           status.innerText = "驗證碼已寄出，請至 Email 查看";
           status.style.color = "#7b4f3a";
 
-          alert("驗證碼已寄出，請至 Email 查看。");
+          showMessage("驗證碼已寄出，請至 Email 查看。");
         } else {
           status.innerText = "驗證碼寄送失敗";
           status.style.color = "red";
-          alert(data.message || "驗證碼寄送失敗");
+          showMessage(data.message || "驗證碼寄送失敗");
         }
       })
       .catch(err => {
         console.error(err);
         status.innerText = "驗證碼寄送失敗";
         status.style.color = "red";
-        alert("驗證碼寄送失敗，請稍後再試");
+        showMessage("驗證碼寄送失敗，請稍後再試");
       });
     }
 
@@ -570,12 +643,12 @@
       const status = document.getElementById("emailVerifyStatus");
 
       if (!email) {
-        alert("請先填寫 Email");
+        showMessage("請先填寫 Email");
         return;
       }
 
       if (!code) {
-        alert("請輸入驗證碼");
+        showMessage("請輸入驗證碼");
         return;
       }
 
@@ -599,7 +672,7 @@
           status.innerText = "Email 驗證成功";
           status.style.color = "green";
 
-          alert("Email 驗證成功");
+          showMessage("Email 驗證成功");
         } else {
           isEmailVerified = false;
           verifiedEmail = "";
@@ -607,7 +680,7 @@
           status.innerText = "驗證碼錯誤或已失效";
           status.style.color = "red";
 
-          alert(data.message || "驗證碼錯誤或已失效");
+          showMessage(data.message || "驗證碼錯誤或已失效");
         }
       })
       .catch(err => {
@@ -617,7 +690,7 @@
         status.innerText = "驗證失敗";
         status.style.color = "red";
 
-        alert("驗證失敗，請稍後再試");
+        showMessage("驗證失敗，請稍後再試");
       });
     }
 
@@ -639,21 +712,21 @@
         if (data.status === "success") {
           renderSummary(formData);
           goToPage(3);
-          alert("登記成功！確認信已寄出，請至 Email 查看。");
+          showMessage("登記成功！確認信已寄出，請至 Email 查看。");
         } else {
-          alert(data.message || "送出失敗，請稍後再試。");
+          showMessage(data.message || "送出失敗，請稍後再試。");
         }
       })
       .catch(err => {
         console.error(err);
-        alert("送出失敗，請確認網路或稍後再試。");
+        showMessage("送出失敗，請確認網路或稍後再試。");
       });
     }
 
     window.addEventListener("load", function () {
       initNumberSelects();
 
-      const token = new URLSearchParams(window.location.search).get("token");
+      const token = getTokenFromUrl();
 
       if (token) {
         fetch(GAS_URL, {
@@ -682,16 +755,17 @@
             renderSummary(formData);
             goToPage(3);
           } else {
-            alert("查無登記資料，請重新填寫。");
+            showMessage("查無登記資料，請重新填寫。");
             goToPage(2);
           }
         })
         .catch(err => {
           console.error(err);
-          alert("載入登記資料失敗，請稍後再試。");
+          showMessage("載入登記資料失敗，請稍後再試。");
           goToPage(2);
         });
       } else {
+        goToPage(1);
         toggleAttendanceDetails();
       }
     });
