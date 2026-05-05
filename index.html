@@ -60,14 +60,14 @@
     
       width: min(
         var(--card-width),
-        calc(100vw - 8px),
+        calc(100vw - 20px),
         calc((100svh - 20px) * var(--card-width) / var(--card-height))
       );
     
       height: calc(
         min(
           var(--card-width),
-          calc(100vw - 8px),
+          calc(100vw - 20px),
           calc((100svh - 20px) * var(--card-width) / var(--card-height))
         ) * var(--card-height) / var(--card-width)
       );
@@ -427,7 +427,7 @@
       padding: 0 18px;    /* 只保留左右間距 */
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 720px) {
       .page {
         align-items: flex-start;
         padding-left: 12px;
