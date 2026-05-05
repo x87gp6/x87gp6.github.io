@@ -163,8 +163,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      border-radius: 999px;
+      min-height: 48px;
+      border-radius: 12px;
       background: rgba(123,79,58,0.12);
       color: #5a3e2b;
       font-weight: 700;
@@ -436,7 +436,7 @@
       min-height: 42px;
       margin-top: 8px;
       padding: 10px 18px;
-      border-radius: 999px;
+      border-radius: 12px;
       background: rgba(123,79,58,0.12);
       color: #5a3e2b;
       font-weight: 700;
@@ -529,6 +529,14 @@
       margin-top: 10px;
     }
 
+    .traffic-block {
+      margin-top: 18px;   /* 對齊 label */
+    }
+    
+    .traffic-title {
+      margin-bottom: 8px; /* 對齊 input */
+    }
+
     @media (max-width: 720px) {
       .page {
         align-items: flex-start;
@@ -592,7 +600,7 @@
       <div class="card-scroll">
       <h1>請協助填寫出席資訊</h1>
 
-      <div class="info">
+      <div class="info summary-section">
         <div><strong>日期：</strong><span id="page2Date"></span></div>
         <div><strong>時間：</strong><span id="page2Time"></span></div>
         <div><strong>宴客地點：</strong><span id="page2Location"></span></div>
@@ -606,8 +614,8 @@
           </a>
         </div>
 
-        <div>
-          <div><strong>交通：</strong></div>
+        <div class="traffic-block">
+          <div class="traffic-title"><strong>交通：</strong></div>
           <div id="page2Traffic"></div>
         </div>
       </div>
