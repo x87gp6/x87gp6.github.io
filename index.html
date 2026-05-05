@@ -53,66 +53,30 @@
         linear-gradient(rgba(0,0,0,0.36), rgba(0,0,0,0.48)),
         url("./P3a.jpeg");
     }
-
-.card {
-  /* ⭐ 你只調這兩個數字 */
-  --card-width: 680px;
-  --card-height: 1473px;
-
-  width: min(var(--card-width), calc(100vw - 28px));
-  height: min(var(--card-height), calc((100vw - 28px) * var(--card-height) / var(--card-width)), calc(100svh - 40px));
-
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  background-color: rgba(255,255,255,0.9);
-  background-size: cover;
-  background-position: center bottom;
-  background-repeat: no-repeat;
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  border-radius: 44px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-}
-
-.card {
-  --card-width: 680px;
-  --card-height: 1473px;
-
-  width: min(
-    var(--card-width),
-    calc(100vw - 28px),
-    calc((100svh - 40px) * var(--card-width) / var(--card-height))
-  );
-
-  height: calc(
-    min(
-      var(--card-width),
-      calc(100vw - 28px),
-      calc((100svh - 40px) * var(--card-width) / var(--card-height))
-    ) * var(--card-height) / var(--card-width)
-  );
-
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  background-color: rgba(255,255,255,0.9);
-  background-size: cover;
-  background-position: center bottom;
-  background-repeat: no-repeat;
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  border-radius: 44px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-}
+    
+    .card {
+      --card-width: 680px;
+      --card-height: 1473px;
+    
+      width: min(var(--card-width), calc(100vw - 28px));
+      height: min(var(--card-height), calc((100vw - 28px) * var(--card-height) / var(--card-width)), calc(100svh - 40px));
+    
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    
+      background-color: rgba(255,255,255,0.9);
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    
+      border-radius: 44px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
 
     #page1 .card { background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.9)), url("./P1b.jpg"); }
     #page2 .card { background-image: linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.92)), url("./P2b.jpg"); }
