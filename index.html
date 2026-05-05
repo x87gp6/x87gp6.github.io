@@ -105,6 +105,15 @@
 
     .card-scroll::-webkit-scrollbar { width: 0; height: 0; }
 
+    :root {
+      --field-height: 44px;
+      --label-gap: 8px;
+      --section-gap: 18px;
+      --button-gap: 10px;
+      --primary-brown: #7b4f3a;
+      --primary-brown-dark: #5a3e2b;
+    }
+
     h1 {
       text-align: center;
       margin: 0 0 22px;
@@ -116,29 +125,45 @@
     p {
       line-height: 1.85;
       font-size: 1.05rem;
-      margin: 0 0 18px;
+      margin: 0 0 var(--section-gap);
     }
 
     .info {
-      line-height: 1.9;
+      line-height: 1.75;
       margin-bottom: 24px;
       font-size: 1rem;
     }
 
     .info div { margin-bottom: 4px; }
 
+    .info-row,
+    .summary-row {
+      display: flex;
+      align-items: center;
+      gap: var(--button-gap);
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      line-height: 1.65;
+    }
+
+    .info-row strong,
+    .summary-row strong {
+      flex: 0 0 auto;
+    }
+
     label {
       display: block;
-      margin-top: 18px;
+      margin-top: var(--section-gap);
+      margin-bottom: var(--label-gap);
       font-weight: 700;
       line-height: 1.5;
     }
 
     input, select {
       width: 100%;
-      min-height: 48px;
-      padding: 12px 14px;
-      margin-top: 8px;
+      min-height: var(--field-height);
+      padding: 0 14px;
+      margin-top: 0;
       border-radius: 12px;
       border: 1px solid #bbb;
       font-size: 16px;
@@ -155,17 +180,16 @@
     .map-links {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 14px 0 20px;
+      gap: var(--button-gap);
+      margin: var(--label-gap) 0 var(--section-gap);
     }
 
     .map-links a {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 12px 14px;
-      border-radius: 12px;
+      min-height: var(--field-height);
+      border-radius: 999px;
       background: rgba(123,79,58,0.12);
       color: #5a3e2b;
       font-weight: 700;
@@ -194,8 +218,8 @@
 
     button {
       border: none;
-      min-height: 48px;
-      padding: 13px 28px;
+      min-height: var(--field-height);
+      padding: 0 28px;
       border-radius: 999px;
       font-size: 1rem;
       font-weight: 700;
@@ -233,8 +257,8 @@
     }
 
     .summary strong {
-      display: inline-block;
-      min-width: 150px;
+      display: inline;
+      min-width: 0;
     }
 
     .summary-section {
@@ -283,9 +307,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      margin-top: 8px;
-      padding: 10px 18px;
+      min-height: var(--field-height);
+      margin-top: var(--label-gap);
+      padding: 0 18px;
       border-radius: 999px;
       background: rgba(123,79,58,0.12);
       color: #5a3e2b;
@@ -320,6 +344,7 @@
 
     .email-label-row label {
       margin-top: 0;
+      margin-bottom: 0;
     }
 
     #emailVerifyStatus {
@@ -424,7 +449,7 @@
       align-items: center;
       justify-content: center;
     
-      min-height: 44px;
+      min-height: var(--field-height);
       padding: 0 18px;
     }
 
@@ -434,10 +459,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      margin-top: 8px;
-      padding: 10px 14px;
-      border-radius: 12px;
+      min-height: var(--field-height);
+      margin-top: var(--label-gap);
+      padding: 0 18px;
+      border-radius: 999px;
       background: rgba(123,79,58,0.12);
       color: #5a3e2b;
       font-weight: 700;
@@ -530,14 +555,6 @@
       margin-top: 10px;
     }
 
-    .traffic-block {
-      margin-top: 18px;   /* 對齊 label */
-    }
-    
-    .traffic-title {
-      margin-bottom: 8px; /* 對齊 input */
-    }
-
     @media (max-width: 720px) {
       .page {
         align-items: flex-start;
@@ -565,9 +582,9 @@
       .map-links { grid-template-columns: 1fr 1fr; }
     
       .summary strong {
-        display: block;
+        display: inline;
         min-width: 0;
-        margin-top: 10px;
+        margin-top: 0;
       }
     }
 
@@ -601,10 +618,10 @@
       <div class="card-scroll">
       <h1>請協助填寫出席資訊</h1>
 
-      <div class="info summary-section">
-        <div><strong>日期：</strong><span id="page2Date"></span></div>
-        <div><strong>時間：</strong><span id="page2Time"></span></div>
-        <div><strong>宴客地點：</strong><span id="page2Location"></span></div>
+      <div class="info">
+        <div class="info-row"><strong>日期：</strong><span id="page2Date"></span></div>
+        <div class="info-row"><strong>時間：</strong><span id="page2Time"></span></div>
+        <div class="info-row"><strong>宴客地點：</strong><span id="page2Location"></span></div>
 
         <div class="map-links">
           <a href="https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
@@ -615,9 +632,9 @@
           </a>
         </div>
 
-        <div class="traffic-block">
-          <div class="traffic-title"><strong>交通：</strong></div>
-          <div id="page2Traffic"></div>
+        <div class="info-row">
+          <strong>交通：</strong>
+          <span id="page2Traffic"></span>
         </div>
       </div>
 
@@ -1012,8 +1029,8 @@
           <div>誠摯感謝您蒞臨我們的婚宴，與我們一同留下珍貴回憶。</div>
         </div>
 
-        <div>
-          <div><strong>宴客照片：</strong></div>
+        <div class="summary-row">
+          <strong>宴客照片：</strong>
           <a class="photo-link" href="${PHOTO_ALBUM_URL}" target="_blank" rel="noopener">觀賞與下載照片</a>
         </div>
       `;
@@ -1031,41 +1048,36 @@
       const showLockedInfo = isAfterEditLock();
       const tableNoHtml = showLockedInfo
         ? `
-          <div>
-            <div><strong>桌號：</strong></div>
-            <div style="display:flex; align-items:center; flex-wrap:nowrap;">
-              <span>${data.tableNo || "尚未公告"}</span>
-              <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
-            </div>
+          <div class="summary-row">
+            <strong>桌號：</strong>
+            <span>${data.tableNo || "尚未公告"}</span>
+            <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
           </div>
         `
         : "";
 
-      const seatMapHtml = "";
-
       document.getElementById("summary").innerHTML = `
         <div class="summary-section">
-          <div><strong>日期：</strong>${WEDDING_DATE}</div>
-          <div><strong>時間：</strong>${WEDDING_TIME}</div>
-          <div><strong>宴客地點：</strong>${WEDDING_LOCATION}</div>
+          <div class="summary-row"><strong>日期：</strong><span>${WEDDING_DATE}</span></div>
+          <div class="summary-row"><strong>時間：</strong><span>${WEDDING_TIME}</span></div>
+          <div class="summary-row"><strong>宴客地點：</strong><span>${WEDDING_LOCATION}</span></div>
 
           <div class="map-links">
             <a href="${GOOGLE_MAP_URL}" target="_blank" rel="noopener">Google 地圖</a>
             <a href="${APPLE_MAP_URL}" target="_blank" rel="noopener">Apple 地圖</a>
           </div>
 
-          <div><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
+          <div class="summary-row"><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
         </div>
 
         <div>
           ${tableNoHtml}
-          ${seatMapHtml}
-          <div><strong>姓名：</strong>${data.name || ""}</div>
-          <div><strong>與新人關係：</strong>${data.relationship || ""}</div>
-          <div><strong>是否出席：</strong>${attendanceText(data.attendance)}</div>
-          <div><strong>出席人數：</strong>${data.guestCount ?? 0}</div>
-          <div><strong>兒童座椅：</strong>${data.childSeat ?? 0}</div>
-          <div><strong>素食人數：</strong>${data.vegetarian ?? 0}</div>
+          <div class="summary-row"><strong>姓名：</strong><span>${data.name || ""}</span></div>
+          <div class="summary-row"><strong>與新人關係：</strong><span>${data.relationship || ""}</span></div>
+          <div class="summary-row"><strong>是否出席：</strong><span>${attendanceText(data.attendance)}</span></div>
+          <div class="summary-row"><strong>出席人數：</strong><span>${data.guestCount ?? 0}</span></div>
+          <div class="summary-row"><strong>兒童座椅：</strong><span>${data.childSeat ?? 0}</span></div>
+          <div class="summary-row"><strong>素食人數：</strong><span>${data.vegetarian ?? 0}</span></div>
         </div>
       `;
     }
