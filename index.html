@@ -58,8 +58,19 @@
       --card-width: 680px;
       --card-height: 1473px;
     
-      width: min(var(--card-width), calc(100vw - 28px));
-      height: min(var(--card-height), calc((100vw - 28px) * var(--card-height) / var(--card-width)), calc(100svh - 40px));
+      width: min(
+        var(--card-width),
+        calc(100vw - 28px),
+        calc((100svh - 40px) * var(--card-width) / var(--card-height))
+      );
+    
+      height: calc(
+        min(
+          var(--card-width),
+          calc(100vw - 28px),
+          calc((100svh - 40px) * var(--card-width) / var(--card-height))
+        ) * var(--card-height) / var(--card-width)
+      );
     
       position: relative;
       overflow: hidden;
