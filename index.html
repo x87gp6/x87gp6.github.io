@@ -790,7 +790,7 @@
       thanksDate: "2026-11-11T00:00:00"
     };
 
-    const WEDDING_LOCATION = "251新北市淡水區中正路382號";
+    const WEDDING_LOCATION = "新北市淡水區中正路382號";
     const WEDDING_TRAFFIC = `<button class="parking-link" type="button" onclick="openParkingInfo()">停車資訊</button>`;
     const GOOGLE_MAP_URL = "https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
     const APPLE_MAP_URL = "https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82";
@@ -1067,7 +1067,10 @@
             <a href="${APPLE_MAP_URL}" target="_blank" rel="noopener">Apple 地圖</a>
           </div>
 
-          <div class="summary-row"><strong>交通：</strong>${WEDDING_TRAFFIC}</div>
+          <div class="summary">
+            <div class="summary-title">交通：</div>
+            <div class="summary-content">${WEDDING_TRAFFIC}</div>
+          </div>
         </div>
 
         <div>
