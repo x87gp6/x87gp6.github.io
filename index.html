@@ -427,6 +427,108 @@
       padding: 0 18px;
     }
 
+
+
+    .parking-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(123,79,58,0.12);
+      color: #5a3e2b;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: none;
+      transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+    }
+
+    .parking-link:hover,
+    .parking-link:focus-visible {
+      background: rgba(123,79,58,0.22);
+      box-shadow: 0 5px 14px rgba(123,79,58,0.16);
+    }
+
+    .parking-link:active,
+    .parking-link.pressed {
+      background: rgba(123,79,58,0.32);
+      color: #5a3e2b;
+      transform: scale(0.97);
+      box-shadow: 0 5px 14px rgba(123,79,58,0.12);
+      opacity: 1;
+    }
+
+    .parking-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.64);
+      z-index: 10000;
+    }
+
+    .parking-modal.active { display: flex; }
+
+    .parking-box {
+      width: min(100%, 760px);
+      max-height: 92svh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 14px 48px rgba(0,0,0,0.38);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .parking-box h2 {
+      margin: 0 0 14px;
+      text-align: center;
+      font-size: 1.3rem;
+      color: #5a3e2b;
+      letter-spacing: 0.06em;
+    }
+
+    .parking-item {
+      padding: 14px 0 18px;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .parking-item:first-of-type { border-top: none; }
+
+    .parking-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+      color: #5a3e2b;
+      line-height: 1.45;
+    }
+
+    .parking-item div {
+      line-height: 1.75;
+      font-size: 0.98rem;
+    }
+
+    .parking-item img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      display: block;
+      margin-top: 10px;
+      border-radius: 12px;
+      background: #f6f1ec;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .parking-close {
+      width: 100%;
+      margin-top: 10px;
+    }
+
     @media (max-width: 720px) {
       .page {
         align-items: flex-start;
@@ -614,6 +716,42 @@
     </div>
   </div>
 
+  <div id="parkingModal" class="parking-modal" onclick="closeParkingInfo(event)">
+    <div class="parking-box">
+      <h2>停車資訊</h2>
+
+      <div class="parking-item">
+        <h3>滬尾藝文休閒園區停車場</h3>
+        <div><strong>地址：</strong>新北市淡水區中正路一段2號B1</div>
+        <div><strong>步行到會場：</strong>2分 / 120公尺</div>
+        <div><strong>收費：</strong>120元 / 小時</div>
+        <div><strong>收費方式：</strong>信用卡</div>
+        <img src="fabmall.jpg" alt="滬尾藝文休閒園區停車場位置圖">
+      </div>
+
+      <div class="parking-item">
+        <h3>及泰淡水紅毛城停車場</h3>
+        <div><strong>地址：</strong>新北市淡水區文化里中正路30巷1號</div>
+        <div><strong>步行到會場：</strong>4分 / 270公尺</div>
+        <div><strong>收費：</strong>40元 / 小時</div>
+        <div><strong>收費方式：</strong>信用卡、LINE PAY</div>
+        <img src="fsd.jpg" alt="及泰淡水紅毛城停車場位置圖">
+      </div>
+
+      <div class="parking-item">
+        <h3>台灣大車位-新北淡水淡海路場</h3>
+        <div><strong>地址：</strong>新北市淡水區油車里淡海路18號</div>
+        <div><strong>步行到會場：</strong>8分 / 600公尺</div>
+        <div><strong>收費：</strong>80元 / 小時</div>
+        <div><strong>收費方式：</strong>信用卡</div>
+        <img src="ts.jpg" alt="台灣大車位-新北淡水淡海路場位置圖">
+      </div>
+
+      <button class="parking-close secondary" type="button" onclick="closeParkingInfo()">關閉</button>
+    </div>
+  </div>
+
+
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
 
@@ -624,7 +762,7 @@
     };
 
     const WEDDING_LOCATION = "251新北市淡水區中正路382號";
-    const WEDDING_TRAFFIC = "交通資訊將於確認後補充，您可先透過上方地圖連結查看宴客地點。";
+    const WEDDING_TRAFFIC = `<button class="parking-link" type="button" onclick="openParkingInfo()">停車資訊</button>`;
     const GOOGLE_MAP_URL = "https://www.google.com/maps/place/%E5%98%89%F0%A0%AB%82/@25.1757864,121.4268743,17z/data=!4m6!3m5!1s0x3442a58fddc78345:0x3e5f1ce27904fdee!8m2!3d25.1757864!4d121.4294492!16s%2Fg%2F11fm5c0fb2?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
     const APPLE_MAP_URL = "https://maps.apple.com/?address=No.%20382%20Zhongzheng%20Rd,%20Tamsui%20District,%20New%20Taipei%20City%20251018,%20Taiwan&auid=5081677717952371797&ll=25.175772,121.429802&lsp=9902&q=%E8%B1%AA%E9%82%B8%E5%98%89%F0%A0%AB%82";
     const SEAT_MAP_IMAGE_URL = "TableNo.PNG";
@@ -673,6 +811,16 @@
       document.getElementById("seatMapModal").classList.remove("active");
     }
 
+
+    function openParkingInfo() {
+      document.getElementById("parkingModal").classList.add("active");
+    }
+
+    function closeParkingInfo(event) {
+      if (event && event.target !== document.getElementById("parkingModal")) return;
+      document.getElementById("parkingModal").classList.remove("active");
+    }
+
     document.addEventListener("click", function (event) {
       const btn = event.target.closest("button");
       if (!btn) return;
@@ -704,7 +852,7 @@
       document.getElementById("page2Date").innerText = WEDDING_DATE;
       document.getElementById("page2Time").innerText = WEDDING_TIME;
       document.getElementById("page2Location").innerText = WEDDING_LOCATION;
-      document.getElementById("page2Traffic").innerText = WEDDING_TRAFFIC;
+      document.getElementById("page2Traffic").innerHTML = WEDDING_TRAFFIC;
     }
 
 
@@ -873,7 +1021,7 @@
         ? `
           <div>
             <div><strong>桌號：</strong></div>
-            <div style="display:flex; align-items:center; gap: 10px; flex-wrap:nowrap;">
+            <div style="display:flex; align-items:center; flex-wrap:nowrap;">
               <span>${data.tableNo || "尚未公告"}</span>
               <a href="javascript:void(0)" onclick="openSeatMap()" class="seat-map-link">座位引導圖</a>
             </div>
