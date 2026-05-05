@@ -423,38 +423,36 @@
       align-items: center;
       justify-content: center;
     
-      min-height: 44px;   /* 跟 Google 地圖一致 */
-      padding: 0 18px;    /* 只保留左右間距 */
+      min-height: 44px;
+      padding: 0 18px;
     }
 
     @media (max-width: 720px) {
       .page {
         align-items: flex-start;
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: 4px;
+        padding-right: 4px;
       }
-
+    
       .card {
         margin: 0 auto;
-        width: min(100%, calc((100svh - 44px) * 9 / 19.5));
-        height: min(calc(100svh - 44px), calc((100vw - 24px) * 19.5 / 9));
         border-radius: 44px;
       }
-
+    
       .card-scroll { padding: 24px 18px; }
-
+    
       p, .info, .summary { font-size: 0.98rem; }
-
+    
       .buttons {
         width: 100%;
         gap: 10px;
         margin-top: 22px;
       }
-
+    
       .buttons button { width: 100%; }
-
+    
       .map-links { grid-template-columns: 1fr 1fr; }
-
+    
       .summary strong {
         display: block;
         min-width: 0;
