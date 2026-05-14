@@ -892,14 +892,34 @@
       const inputCode = document.getElementById("inviteCodeInput").value.trim();
       const status = document.getElementById("inviteCodeStatus");
     
-      if (inputCode === INVITE_CODE) {
-        closeInviteCodeModal();
-        goToPage(2);
-      } else {
-        status.innerText = "邀請碼錯誤，請重新輸入。";
-        document.getElementById("inviteCodeInput").value = "";
-        document.getElementById("inviteCodeInput").focus();
+      if (!inputCode) {
+        status.innerText = "請輸入邀請碼";
+        return;
       }
+    
+      status.innerText = "驗證中...";
+    
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "verifyInviteCode",
+          code: inputCode
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          closeInviteCodeModal();
+          goToPage(2);
+        } else {
+          status.innerText = data.message || "邀請碼錯誤";
+          document.getElementById("inviteCodeInput").value = "";
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        status.innerText = "驗證失敗，請稍後再試";
+      });
     }
 
     function openEmailCodeModal() {
