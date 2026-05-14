@@ -634,7 +634,10 @@
       </p>
       -->
       <div class="buttons">
+        <!--
         <button type="button" onclick="goToPage(2)">登記</button>
+        -->
+        <button type="button" onclick="openInviteCodeModal()">登記</button>
       </div>
       </div>
     </div>
@@ -765,6 +768,27 @@
     </div>
   </div>
 
+  <div id="inviteCodeModal" class="custom-alert">
+    <div class="custom-alert-box">
+      <h2>輸入邀請碼</h2>
+      <p>請輸入邀請碼後繼續登記。</p>
+  
+      <input
+        type="text"
+        id="inviteCodeInput"
+        placeholder="請輸入邀請碼"
+        autocomplete="off"
+      >
+  
+      <p id="inviteCodeStatus" style="color:red; margin-top:10px;"></p>
+  
+      <div class="verify-modal-actions">
+        <button type="button" onclick="verifyInviteCode()">確認</button>
+        <button class="secondary" type="button" onclick="closeInviteCodeModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  
   <div id="seatMapModal" class="seat-map-modal" onclick="closeSeatMap(event)">
     <div class="seat-map-box">
       <img id="seatMapImage" src="" alt="婚宴位置圖示">
@@ -810,6 +834,7 @@
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbxbvMX2U-kp1cxDMBZ-7EuQ39Ec6xCupT5pXutbDKn1U7FtaDrKHDCaVLz5owHGz3X87A/exec";
+    const INVITE_CODE = "BY1107";
 
     const CONFIG = {
       wedding: "2026-11-07T12:00:00",
@@ -846,6 +871,35 @@
 
     function closeMessage() {
       document.getElementById("customAlert").classList.remove("active");
+    }
+
+    function openInviteCodeModal() {
+      document.getElementById("inviteCodeInput").value = "";
+      document.getElementById("inviteCodeStatus").innerText = "";
+      document.getElementById("inviteCodeModal").classList.add("active");
+    
+      window.setTimeout(() => {
+        document.getElementById("inviteCodeInput").focus();
+      }, 80);
+    }
+    
+    function closeInviteCodeModal() {
+      document.getElementById("inviteCodeModal").classList.remove("active");
+      goToPage(1);
+    }
+    
+    function verifyInviteCode() {
+      const inputCode = document.getElementById("inviteCodeInput").value.trim();
+      const status = document.getElementById("inviteCodeStatus");
+    
+      if (inputCode === INVITE_CODE) {
+        closeInviteCodeModal();
+        goToPage(2);
+      } else {
+        status.innerText = "邀請碼錯誤，請重新輸入。";
+        document.getElementById("inviteCodeInput").value = "";
+        document.getElementById("inviteCodeInput").focus();
+      }
     }
 
     function openEmailCodeModal() {
