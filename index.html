@@ -877,6 +877,10 @@
       document.getElementById("inviteCodeInput").value = "";
       document.getElementById("inviteCodeStatus").innerText = "";
       document.getElementById("inviteCodeModal").classList.add("active");
+    
+      window.setTimeout(() => {
+        document.getElementById("inviteCodeInput").focus();
+      }, 80);
     }
     
     function closeInviteCodeModal() {
